@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazor.Extensions.WebUSB" Version="1.0.0" />
+    <PackageReference Include="Device.Net.LibUsb" Version="3.1.0" />
+    <PackageReference Include="Hid.Net" Version="4.0.0" />
+    <PackageReference Include="LibUsbDotNet" Version="2.2.29" />
+    <PackageReference Include="SerialPort.Net" Version="3.1.0" />
+    <PackageReference Include="System.IO.Ports" Version="5.0.0" />
+    <PackageReference Include="System.Reactive.Linq" Version="5.0.0" />
+    <PackageReference Include="Usb.Net" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,109 @@
+﻿.car {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.car-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 500px;
+    }
+
+.door {
+    position: absolute;
+    height: 150px;
+}
+
+.open_left_animation {
+    animation: door_open_left 750ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 0, infinite;
+}
+
+.open_right_animation {
+    animation: door_open_right 750ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 0, infinite;
+}
+
+.close_left_animation {
+    animation: door_close_left 750ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 0, infinite;
+}
+
+.close_right_animation {
+    animation: door_close_right 750ms;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1, 0, infinite;
+}
+
+.left_front {
+    top: 200px;
+    left: 676px;
+}
+
+.right_front {
+    top: 201px;
+    left: 880px;
+}
+
+.left_back {
+    top: 325px;
+    left: 683px;
+}
+
+.right_back {
+    top: 333px;
+    left: 875px;
+}
+
+@keyframes door_open_left {
+    from {
+        transform: rotateZ(0deg);
+        transform-origin: top;
+    }
+
+    to {
+        transform: rotateZ(80deg);
+        transform-origin: top;
+    }
+}
+
+@keyframes door_close_left {
+    from {
+        transform: rotateZ(80deg);
+        transform-origin: top;
+    }
+
+    to {
+        transform: rotateZ(0deg);
+        transform-origin: top;
+    }
+}
+
+@keyframes door_open_right {
+    0% {
+        transform: rotateZ(0deg);
+        transform-origin: top;
+    }
+
+    100% {
+        transform: rotateZ(-80deg);
+        transform-origin: top;
+    }
+}
+
+@keyframes door_close_right {
+    0% {
+        transform: rotateZ(-80deg);
+        transform-origin: top;
+    }
+
+    100% {
+        transform: rotateZ(0deg);
+        transform-origin: top;
+    }
+}
