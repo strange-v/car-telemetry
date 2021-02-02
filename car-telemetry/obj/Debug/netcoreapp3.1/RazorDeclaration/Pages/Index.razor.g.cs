@@ -76,28 +76,35 @@ using car_telemetry.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
-using System.Threading;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 3 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
-using System.Diagnostics;
+using System.IO.Ports;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 4 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
-using System.IO.Ports;
+using System.Diagnostics;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 5 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
+using System.Threading;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
+using car_telemetry.Data;
 
 #line default
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
-    public partial class Index : IndexModel
+    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -105,64 +112,34 @@ using System.IO.Ports;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 16 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
- 
-    
-    //protected override void OnAfterRender(bool firstRender)
-    //{
-    //    if (firstRender)
-    //    {
-    //    }
-    //}
+#line 28 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
+       
+    private int Count { get; set; } = 100;
+    Timer _updateTimer;
+    public string ScaleValue { get; set; } = "0.000";
 
-    //protected override void OnInitialized()
-    //{
+    protected override async Task OnInitializedAsync()
+    {
+        ScaleValue = await _readSerialPortService.GetSerialValue();
+        _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
+    }
 
-    //    System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM4");
 
-    //    mySerialPort.BaudRate = 9600;
-    //    mySerialPort.Parity = System.IO.Ports.Parity.None;
-    //    mySerialPort.StopBits = System.IO.Ports.StopBits.One;
-    //    mySerialPort.DataBits = 8;
-    //    mySerialPort.Handshake = System.IO.Ports.Handshake.None;
+    public async Task GetValue()
+    {
+        ScaleValue = await _readSerialPortService.GetSerialValue();
+        await InvokeAsync(() => StateHasChanged());
+    }
 
-    //    mySerialPort.NewLine = (@"&N");
-
-    //    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
-
-    //    ScaleValue = "test";
-
-    //    //I skipped this part with a return, since I don't have COM3 locally
-
-    //    if (!mySerialPort.IsOpen)
-    //    {
-    //        mySerialPort.Open();
-    //    }
-    //}
-
-    //public void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
-    //{
-    //    //System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
-
-    //    try
-    //    {
-    //        SerialPort sp = (SerialPort)sender;
-    //        string indata = sp.ReadExisting();
-    //        ScaleValue = indata.ToString(); //WHEN I PUT DEBUG HERE I CAN SEE THE CORRECT VALUE
-    //        Debug.WriteLine("\n" + ScaleValue + "\n");
-    //        Temporary = ScaleValue;
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        string msg = ex.Message;
-    //    }
-
-    //}
-
+    public void Dispose()
+    {
+        _updateTimer.Dispose();
+    }
 
 #line default
 #line hidden
 #nullable disable
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SerialService _readSerialPortService { get; set; }
     }
 }
 #pragma warning restore 1591
