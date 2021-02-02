@@ -7,6 +7,7 @@
 namespace car_telemetry.Pages
 {
     #line hidden
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -83,27 +84,20 @@ using System.Threading;
 #nullable disable
 #nullable restore
 #line 3 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
-using System;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 4 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
 using System.Diagnostics;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
+#line 4 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
 using System.IO.Ports;
 
 #line default
 #line hidden
 #nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/")]
-    public partial class Index : Microsoft.AspNetCore.Components.ComponentBase
+    public partial class Index : IndexModel
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -111,60 +105,60 @@ using System.IO.Ports;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 11 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
+#line 16 "C:\Users\dzink\source\repos\car-telemetry\car-telemetry\Pages\Index.razor"
  
-    public string ScaleValue { get; set; } = "0.001";
+    
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    if (firstRender)
+    //    {
+    //    }
+    //}
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
-        {
-        }
-    }
+    //protected override void OnInitialized()
+    //{
 
-    protected override void OnInitialized()
-    {
+    //    System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM4");
 
-        System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM4");
+    //    mySerialPort.BaudRate = 9600;
+    //    mySerialPort.Parity = System.IO.Ports.Parity.None;
+    //    mySerialPort.StopBits = System.IO.Ports.StopBits.One;
+    //    mySerialPort.DataBits = 8;
+    //    mySerialPort.Handshake = System.IO.Ports.Handshake.None;
 
-        mySerialPort.BaudRate = 9600;
-        mySerialPort.Parity = System.IO.Ports.Parity.None;
-        mySerialPort.StopBits = System.IO.Ports.StopBits.One;
-        mySerialPort.DataBits = 8;
-        mySerialPort.Handshake = System.IO.Ports.Handshake.None;
+    //    mySerialPort.NewLine = (@"&N");
 
-        mySerialPort.NewLine = (@"&N");
+    //    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
 
-        mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
+    //    ScaleValue = "test";
 
-        ScaleValue = "test";
+    //    //I skipped this part with a return, since I don't have COM3 locally
 
-        //I skipped this part with a return, since I don't have COM3 locally
+    //    if (!mySerialPort.IsOpen)
+    //    {
+    //        mySerialPort.Open();
+    //    }
+    //}
 
-        if (!mySerialPort.IsOpen)
-        {
-            mySerialPort.Open();
+    //public void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+    //{
+    //    //System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
 
-        }
-    }
+    //    try
+    //    {
+    //        SerialPort sp = (SerialPort)sender;
+    //        string indata = sp.ReadExisting();
+    //        ScaleValue = indata.ToString(); //WHEN I PUT DEBUG HERE I CAN SEE THE CORRECT VALUE
+    //        Debug.WriteLine("\n" + ScaleValue + "\n");
+    //        Temporary = ScaleValue;
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        string msg = ex.Message;
+    //    }
 
-    private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
-    {
-        //System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
+    //}
 
-        try
-        {
-            SerialPort sp = (SerialPort)sender;
-            string indata = sp.ReadExisting();
-            ScaleValue = indata.ToString(); //WHEN I PUT DEBUG HERE I CAN SEE THE CORRECT VALUE
-            Debug.WriteLine("\n" + ScaleValue + "\n");
-        }
-        catch (Exception ex)
-        {
-            string msg = ex.Message;
-        }
-
-    }
 
 #line default
 #line hidden

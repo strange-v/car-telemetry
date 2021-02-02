@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
+using System.Threading;
+using System;
+using System.Diagnostics;
+using System.IO.Ports;
 
 namespace car_telemetry.Pages
 {
