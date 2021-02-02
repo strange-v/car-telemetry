@@ -1,0 +1,78 @@
+﻿@page "/car"
+@inherits CarModel
+
+<h1>Car info</h1>
+
+<div class="car">
+    <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
+    @if (doors[0] == 1)
+    {
+        DriverOpened[0] = 1;
+        <img class="door left_front open_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
+    }
+    else if (DriverOpened[0] == 1 && doors[0] == 0)
+    {
+        DriverOpened[0] = 0;
+        <img class="door left_front close_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
+    }
+    else
+    {
+        <img class="door left_front" src="/images/driverClosedDoor.PNG" alt="Image">
+    }
+
+    @if (doors[1] == 1)
+    {
+        DriverOpened[1] = 1;
+        <img class="door left_back open_left_animation" src="/images/leftClosedDoor.png" alt="Image">
+    }
+    else if (DriverOpened[1] == 1 && doors[1] == 0)
+    {
+        DriverOpened[1] = 0;
+        <img class="door left_back close_left_animation" src="/images/leftClosedDoor.png" alt="Image">
+    }
+    else
+    {
+        <img class="door left_back" src="/images/leftClosedDoor.png" alt="Image">
+    }
+
+    @if (doors[2] == 1)
+    {
+        DriverOpened[2] = 1;
+        <img class="door right_back open_right_animation" src="/images/rightClosedDoor.png" alt="Image">
+    }
+    else if (DriverOpened[2] == 1 && doors[2] == 0)
+    {
+        DriverOpened[2] = 0;
+        <img class="door right_back close_right_animation" src="/images/rightClosedDoor.png" alt="Image">
+    }
+    else
+    {
+        <img class="door right_back" src="/images/rightClosedDoor.png" alt="Image">
+    }
+
+    @if (doors[3] == 1)
+    {
+        DriverOpened[3] = 1;
+        <img class="door right_front open_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
+    }
+    else if (DriverOpened[3] == 1 && doors[3] == 0)
+    {
+        DriverOpened[3] = 0;
+        <img class="door right_front close_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
+    }
+    else
+    {
+        <img class="door right_front" src="/images/passangerClosedDoor.png" alt="Image">
+    }
+</div>
+<div>
+</div>
+<div>
+    <button class="btn btn-primary" @onclick="RandArr">RandArray</button>
+    <button class="btn btn-primary" @onclick="CloseAll">Close ALL</button>
+</div>
+
+@foreach (var door in doors)
+{
+    <p>@door</p>
+}
