@@ -23,10 +23,17 @@ namespace car_telemetry.Data
 
             mySerialPort.NewLine = (@"&N");
 
-            if (!mySerialPort.IsOpen)
+            try
             {
-                mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
-                mySerialPort.Open();
+                if (!mySerialPort.IsOpen)
+                {
+                    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
+                    mySerialPort.Open();
+                }
+            }
+            catch (Exception)
+            {
+                SerialPortValue = "Something wrong with selected COM port!";
             }
         }
 
