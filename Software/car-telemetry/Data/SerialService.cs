@@ -13,7 +13,7 @@ namespace car_telemetry.Data
 
         public SerialService()
         {
-            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM4");
+            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM3");
 
             mySerialPort.BaudRate = 9600;
             mySerialPort.Parity = System.IO.Ports.Parity.None;
