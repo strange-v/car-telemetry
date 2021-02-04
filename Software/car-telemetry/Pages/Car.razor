@@ -2,7 +2,30 @@
 @inherits CarModel
 
 <h1>Car info</h1>
-
+<div class="top-data">
+    @if (handbrake == 1)
+    {
+        <div class="icons-container">
+            <img class="icon-top handbrake-img" src="/images/handbrake.png"/>
+        </div>
+    }
+    <div class="icons-container">
+        <img class="icon-top external-temperature" src="/images/thermometer.png" />
+        <span>21</span>
+    </div>
+    <div class="icons-container">
+        <img class="icon-top" src="/images/oil.png" />
+        <span>85</span>
+    </div>
+    <div class="icons-container">
+        <img class="icon-top" src="/images/road.png"/>
+        <span>653 km</span>
+    </div>
+    <div class="icons-container">
+        <img class="icon-top" src="/images/gas.png"/>
+        <span>42 l</span>
+    </div>
+</div>
 <div class="car">
     <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
     @if (doors[0] == 1)

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using System;
 using System.Threading;
-using System;
 using System.Diagnostics;
 using System.IO.Ports;
 
@@ -11,7 +10,7 @@ namespace car_telemetry.Pages
     {
         public int[] DriverOpened { get; set; } = { 0, 0, 0, 0 };
         public int[] doors { get; set; } = { 0, 0, 0, 0 };
-
+        public int handbrake { get; set; } = 1;
         public void RandArr()
         {
             var random = new Random();
