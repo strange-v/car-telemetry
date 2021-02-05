@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Diagnostics;
+using CT.BusinessLogic.Interfaces;
 
-namespace car_telemetry.Data
+namespace CT.BusinessLogic.Services
 {
-    public class SerialService
+    public class SerialService : ISerialService
     {
         public string SerialPortValue { get; set; }
 

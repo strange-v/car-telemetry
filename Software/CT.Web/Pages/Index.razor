@@ -1,8 +1,10 @@
 ﻿@page "/"
 
 @using System.Threading;
-@using car_telemetry.Data
-@inject SerialService _readSerialPortService
+@using CT.BusinessLogic.Interfaces
+
+@inject ISerialService SerialService
+
 
 <h1>Hello, world!</h1>
 
@@ -24,14 +26,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ScaleValue = await _readSerialPortService.GetSerialValue();
+        ScaleValue = await SerialService.GetSerialValue();
         _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
     }
 
 
     public async Task GetValue()
     {
-        ScaleValue = await _readSerialPortService.GetSerialValue();
+        ScaleValue = await SerialService.GetSerialValue();
         await InvokeAsync(() => StateHasChanged());
     }
 
