@@ -33,7 +33,8 @@ namespace car_telemetry
             //services.AddSingleton<SerialService>();
             //services.AddSingleton<ISerialService>();
             services.AddSingleton<ISerialService, SerialService>();
-            services.AddSingleton<ICANanalys, CANanalys>();
+            services.AddSingleton<ICanMessageComposer, CanMessageComposer>();
+            services.AddSingleton<IHandler, AbstractHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

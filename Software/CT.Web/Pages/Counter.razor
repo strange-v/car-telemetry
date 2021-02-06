@@ -1,29 +1,38 @@
-﻿@using System;
-@using System.Diagnostics;
-@using System.IO.Ports;
+﻿@page "/counter"
 
-@page "/counter"
+@using System;
+@using System.Diagnostics;
+@using CT.BusinessLogic.Interfaces;
+@using CT.BusinessLogic.Entities;
+
+@inject ICanMessageComposer CanMessageComposer
+@inject IHandler Handler
 
 <h1>Counter</h1>
 
-<p>Current count: @currentCount</p>
+<button class="btn btn-primary" @onclick="Test">Test</button>
 
+@code{
+    public string Can_1 = "77E 05 62 22 0D 55 65 AA AA\n";
 
-<p>All Ports:</p>
-@foreach (var portName in SerialPort.GetPortNames())
-{
-    <p>@portName</p>;
-}
-
-
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
-
-@code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
+    public void Test()
     {
-        currentCount++;
+
+        CanMessage can_message = CanMessageComposer.Compose(Can_1);
+
+        var result = Handler.Handle(can_message);
+        if (result != null)
+        {
+            Debug.WriteLine($"   {result}");
+        }
+        else
+        {
+            Debug.WriteLine($"   {can_message} was left untouched.");
+        }
+
+        //var door = new DoorHandler(can_message);
     }
+
+
 
 }
