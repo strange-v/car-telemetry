@@ -29,9 +29,6 @@ namespace car_telemetry
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            //services.AddSingleton<WeatherForecastService>();
-            //services.AddSingleton<SerialService>();
-            //services.AddSingleton<ISerialService>();
             services.AddSingleton<ISerialService, SerialService>();
             services.AddSingleton<ICANanalys, CANanalys>();
         }

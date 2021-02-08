@@ -5,22 +5,39 @@ using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Diagnostics;
 using CT.BusinessLogic.Interfaces;
+using System.IO;
+using System.Reflection;
+using System.Text.Json;
+
 
 namespace CT.BusinessLogic.Services
 {
+    class SerialSeting
+    {
+        public string COMPort { get; set; }
+        public int BaudRate { get; set; }
+        public string StopBits { get; set; }
+        public int DataBits { get; set; }
+        public string Parity { get; set; }
+        public string Handshake { get; set; }
+    }
     public class SerialService : ISerialService
     {
         public string SerialPortValue { get; set; }
-
         public SerialService()
         {
-            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM3");
+            string buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string filePath = buildDir + @"\SerialPortConfig.json";
+            string jsonString = File.ReadAllText(filePath);
+            SerialSeting _sersetting = JsonSerializer.Deserialize<SerialSeting>(jsonString);
 
-            mySerialPort.BaudRate = 9600;
-            mySerialPort.Parity = System.IO.Ports.Parity.None;
-            mySerialPort.StopBits = System.IO.Ports.StopBits.One;
-            mySerialPort.DataBits = 8;
-            mySerialPort.Handshake = System.IO.Ports.Handshake.None;
+            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort(_sersetting.COMPort);
+
+            mySerialPort.BaudRate = _sersetting.BaudRate;
+            mySerialPort.Parity = (Parity)Enum.Parse(typeof(Parity), _sersetting.Parity, true);
+            mySerialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), _sersetting.StopBits, true);
+            mySerialPort.DataBits = _sersetting.DataBits;
+            mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), _sersetting.Handshake, true); ;
 
             mySerialPort.NewLine = (@"&N");
 
@@ -41,7 +58,6 @@ namespace CT.BusinessLogic.Services
         private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
-            double scaleDec = 0.00;
             try
             {
                 string indata = sp.ReadExisting();
