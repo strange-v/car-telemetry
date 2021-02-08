@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.IO.Ports;
 using System.Diagnostics;
 using CT.BusinessLogic.Interfaces;
+using System.Configuration;
+using System.Collections.Specialized;
 
 namespace CT.BusinessLogic.Services
 {
@@ -13,7 +15,8 @@ namespace CT.BusinessLogic.Services
         public string SerialPortValue { get; set; }
 
         public SerialService()
-        {
+        {          
+
             System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort("COM3");
 
             mySerialPort.BaudRate = 9600;

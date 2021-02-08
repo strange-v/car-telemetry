@@ -22,7 +22,7 @@ namespace CT.BusinessLogic.Services
             return handler;
         }
 
-        public virtual object Handle(CanMessage canMessage)
+        public virtual CanMessage Handle(CanMessage canMessage)
         {
             if (this._nextHandler != null)
             {

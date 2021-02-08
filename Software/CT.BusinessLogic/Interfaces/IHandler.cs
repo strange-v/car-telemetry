@@ -9,6 +9,6 @@ namespace CT.BusinessLogic.Interfaces
     {
         IHandler SetNext(IHandler handler);
 
-        object Handle(CanMessage canMessage);
+        CanMessage Handle(CanMessage canMessage);
     }
 }
