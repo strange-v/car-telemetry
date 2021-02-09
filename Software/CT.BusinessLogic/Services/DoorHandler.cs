@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
 using CT.BusinessLogic.Entities;
 
 namespace CT.BusinessLogic.Services
@@ -31,7 +29,6 @@ namespace CT.BusinessLogic.Services
 
             if (canMessage.Id.ToString("X") == "77E" && canMessage.Byte3.ToString("X") == "D" && canMessage.Byte2.ToString("X") == "22")
             {
-                int[] doors = new int[4];
                 string showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
                 //01010101
                 int[] door_index = AllIndexesOf(showByteInString, "1");
@@ -40,48 +37,47 @@ namespace CT.BusinessLogic.Services
                 if (Array.IndexOf(door_index, 7) == -1)
                 {
                     // "Driver door is open!";
-                    doors[0] = 1;
+                    Data.aData[Data.CAN_properties.DoorFrontLeft] = "Open";
                 }
                 else
                 {
                     // "Driver door is closed!";
-                    doors[0] = 0;
+                    Data.aData[Data.CAN_properties.DoorFrontLeft] = "Close";
                 };
                 if (Array.IndexOf(door_index, 5) == -1)
                 {
+                    Data.aData[Data.CAN_properties.DoorFrontRight] = "Open";
                     // "Passanger door is open!";
-                    doors[3] = 1;
                 }
                 else
                 {
+                    Data.aData[Data.CAN_properties.DoorFrontRight] = "Close";
                     // "Passanger door is closed!";
-                    doors[3] = 0;
                 };
                 if (Array.IndexOf(door_index, 3) == -1)
                 {
+                    Data.aData[Data.CAN_properties.DoorBackLeft] = "Open";
                     // "Left Back door is open!";
-                    doors[1] = 1;
                 }
                 else
                 {
+                    Data.aData[Data.CAN_properties.DoorBackLeft] = "Close";
                     // "Left Back door is closed!";
-                    doors[1] = 0;
                 };
 
                 if (Array.IndexOf(door_index, 1) == -1)
                 {
+                    Data.aData[Data.CAN_properties.DoorBackRight] = "Open";
                     // "Right Back door is open!";
-                    doors[2] = 1;
                 }
                 else
                 {
+                    Data.aData[Data.CAN_properties.DoorBackRight] = "Close";
                     // "Right Back door is closed!";
-                    doors[2] = 0;
                 };
 
-                
-                return doors; 
-                //tuple(YourEnum, string)
+               
+                return canMessage;
 
             }           
             else

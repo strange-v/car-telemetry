@@ -24,6 +24,7 @@ namespace CT.BusinessLogic.Services
 
         public virtual CanMessage Handle(CanMessage canMessage)
         {
+            
             if (this._nextHandler != null)
             {
                 return this._nextHandler.Handle(canMessage);
@@ -32,6 +33,7 @@ namespace CT.BusinessLogic.Services
             {
                 return null;
             }
+            
         }
     }
 }
