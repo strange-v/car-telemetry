@@ -8,7 +8,7 @@
 @using CT.BusinessLogic.Entities;
 
 @inject ICanMessageComposer CanMessageComposer
-@*@inject IHandler Handler*@
+@inject IHandler Handler
 
 <h1>@message</h1>
 <h1>@showByteInString</h1>
@@ -49,7 +49,7 @@
         return indexes.ToArray();
     }
 
-    public string Can_1 = "77E 05 62 22 0D 40 65 AA AA\n";
+    public string Can_1 = "77E 05 62 22 0D 00 65 AA AA\n";
     public string message = "No answer!";
     public string driverMassage;
     public string passangerMassage;
@@ -71,21 +71,23 @@
         IndoorTemperature
     }
 
-    public Dictionary<CAN_properties, string> aData = new Dictionary<CAN_properties, string>();
+    public Dictionary<CAN_properties, string> aData = new Dictionary<CAN_properties, string>() {
+            { CAN_properties.DoorBackLeft, "Close"},
+            { CAN_properties.DoorBackRight, "Close"},
+            { CAN_properties.DoorFrontLeft, "Close"},
+            { CAN_properties.DoorFrontRight, "Close"},
+            { CAN_properties.OutdoorTemperature, "0.0"},
+            { CAN_properties.IndoorTemperature, "0.0"},
+
+    };
+
 
 
 
     public void Test()
     {
 
-        //aData.Add(CAN_properties.DoorFrontRight, "0");
-        //aData.Add(CAN_properties.DoorFrontLeft, "0");
-        //aData.Add(CAN_properties.DoorBackRight, "0");
-        //aData.Add(CAN_properties.DoorBackLeft, "0");
-
-        //aData.Add(CAN_properties.OutdoorTemperature, "0.0");
-        //aData.Add(CAN_properties.IndoorTemperature, "0.0");
-
+        
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
         if (can_message.Id.ToString("X") == "77E" && can_message.Byte3.ToString("X") == "D")
         {
@@ -98,21 +100,38 @@
             {
                 driverMassage = "Driver door is open!";
                 //doors[0] = 1;
+            }
+            else
+            {
+                driverMassage = "Driver door is closed!";
+                //doors[0] = 0;
             };
             if (Array.IndexOf(door_index, 5) == -1)
             {
                 passangerMassage = "Passanger door is open!";
                 //doors[3] = 1;
+            }
+            else
+            {
+                passangerMassage = "Passanger door is closed!";
+                //doors[3] = 0;
             };
             if (Array.IndexOf(door_index, 3) == -1)
             {
                 leftBackMassage = "Left Back door is open!";
                 //doors[1] = 1;
+            }
+            else { leftBackMassage = "Left Back door is closed!";
+                //doors[1] = 0;
             };
+
             if (Array.IndexOf(door_index, 1) == -1)
             {
                 rightBackMassage = "Right Back door is open!";
                 //doors[2] = 1;
+            }
+            else {rightBackMassage = "Right Back door is closed!";
+                //doors[2] = 0;
             };
 
             if (can_message.Byte4.ToString("X") == "55")
@@ -126,17 +145,8 @@
         }
 
 
-        //var result = Handler.Handle(can_message);
-        //if (result != null)
-        //{
-        //    Debug.WriteLine($"   {result}");
-        //}
-        //else
-        //{
-        //    Debug.WriteLine($"   {can_message} was left untouched.");
-        //}
-
-        //var door = new DoorHandler(can_message);
+        var result = Handler.Handle(can_message);
+        
     }
 
 
