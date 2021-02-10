@@ -50,25 +50,25 @@
 }
 
 .open_left_animation {
-    animation: door_open_left 750ms;
+    animation: door_open_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .open_right_animation {
-    animation: door_open_right 750ms;
+    animation: door_open_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .close_left_animation {
-    animation: door_close_left 750ms;
+    animation: door_close_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .close_right_animation {
-    animation: door_close_right 750ms;
+    animation: door_close_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }

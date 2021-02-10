@@ -1,12 +1,23 @@
 ﻿@page "/car"
 @inherits CarModel
+@using System;
+@using System.Diagnostics;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading;
+@using CT.BusinessLogic.Interfaces;
+@using CT.BusinessLogic.Entities;
+
+@inject ISerialService SerialService
+@inject ICanMessageComposer CanMessageComposer
+@inject IHandler Handler
 
 <h1>Car info</h1>
 <div class="top-data">
     @if (handbrake == 1)
     {
         <div class="icons-container">
-            <img class="icon-top handbrake-img" src="/images/handbrake.png"/>
+            <img class="icon-top handbrake-img" src="/images/handbrake.png" />
         </div>
     }
     <div class="icons-container">
@@ -18,22 +29,22 @@
         <span>85</span>
     </div>
     <div class="icons-container">
-        <img class="icon-top" src="/images/road.png"/>
+        <img class="icon-top" src="/images/road.png" />
         <span>653 km</span>
     </div>
     <div class="icons-container">
-        <img class="icon-top" src="/images/gas.png"/>
+        <img class="icon-top" src="/images/gas.png" />
         <span>42 l</span>
     </div>
 </div>
 <div class="car">
     <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
-    @if (doors[0] == 1)
+    @if (Data.aData[Data.CAN_properties.DoorFrontLeft] == "Open")
     {
         DriverOpened[0] = 1;
         <img class="door left_front open_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
     }
-    else if (DriverOpened[0] == 1 && doors[0] == 0)
+    else if (DriverOpened[0] == 1 && Data.aData[Data.CAN_properties.DoorFrontLeft] == "Close")
     {
         DriverOpened[0] = 0;
         <img class="door left_front close_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
@@ -43,12 +54,12 @@
         <img class="door left_front" src="/images/driverClosedDoor.PNG" alt="Image">
     }
 
-    @if (doors[1] == 1)
+    @if (Data.aData[Data.CAN_properties.DoorBackLeft] == "Open")
     {
         DriverOpened[1] = 1;
         <img class="door left_back open_left_animation" src="/images/leftClosedDoor.png" alt="Image">
     }
-    else if (DriverOpened[1] == 1 && doors[1] == 0)
+    else if (DriverOpened[1] == 1 && Data.aData[Data.CAN_properties.DoorBackLeft] == "Close")
     {
         DriverOpened[1] = 0;
         <img class="door left_back close_left_animation" src="/images/leftClosedDoor.png" alt="Image">
@@ -58,12 +69,12 @@
         <img class="door left_back" src="/images/leftClosedDoor.png" alt="Image">
     }
 
-    @if (doors[2] == 1)
+    @if (Data.aData[Data.CAN_properties.DoorBackRight] == "Open")
     {
         DriverOpened[2] = 1;
         <img class="door right_back open_right_animation" src="/images/rightClosedDoor.png" alt="Image">
     }
-    else if (DriverOpened[2] == 1 && doors[2] == 0)
+    else if (DriverOpened[2] == 1 && Data.aData[Data.CAN_properties.DoorBackRight] == "Close")
     {
         DriverOpened[2] = 0;
         <img class="door right_back close_right_animation" src="/images/rightClosedDoor.png" alt="Image">
@@ -73,12 +84,12 @@
         <img class="door right_back" src="/images/rightClosedDoor.png" alt="Image">
     }
 
-    @if (doors[3] == 1)
+    @if (Data.aData[Data.CAN_properties.DoorFrontRight] == "Open")
     {
         DriverOpened[3] = 1;
         <img class="door right_front open_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
     }
-    else if (DriverOpened[3] == 1 && doors[3] == 0)
+    else if (DriverOpened[3] == 1 && Data.aData[Data.CAN_properties.DoorFrontRight] == "Open")
     {
         DriverOpened[3] = 0;
         <img class="door right_front close_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
@@ -89,13 +100,33 @@
     }
 </div>
 <div>
-</div>
-<div>
-    <button class="btn btn-primary" @onclick="RandArr">RandArray</button>
-    <button class="btn btn-primary" @onclick="CloseAll">Close ALL</button>
+    @foreach (KeyValuePair<Data.CAN_properties, string> entry in Data.aData)
+    {
+        <p>@entry.Key = @entry.Value</p>
+        // do something with entry.Value or entry.Key
+    }
 </div>
 
-@foreach (var door in doors)
+@code
 {
-    <p>@door</p>
+    private int Count { get; set; } = 100;
+    Timer _updateTimer;
+    public string Can_1 { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Can_1 = await SerialService.GetSerialValue();
+        _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
+        CanMessage can_message = CanMessageComposer.Compose(Can_1);
+        var result = Handler.Handle(can_message);
+    }
+
+
+    public async Task GetValue()
+    {
+        Can_1 = await SerialService.GetSerialValue();
+        await InvokeAsync(() => StateHasChanged());
+        CanMessage can_message = CanMessageComposer.Compose(Can_1);
+        var result = Handler.Handle(can_message);
+    }
 }
