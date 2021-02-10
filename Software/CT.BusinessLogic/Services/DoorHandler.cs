@@ -26,7 +26,8 @@ namespace CT.BusinessLogic.Services
         }
         public override CanMessage Handle(CanMessage canMessage)
         {
-
+            var nextHandler = new InTempHandler();
+            
             if (canMessage.Id.ToString("X") == "77E" && canMessage.Byte3.ToString("X") == "D" && canMessage.Byte2.ToString("X") == "22")
             {
                 string showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
@@ -76,12 +77,13 @@ namespace CT.BusinessLogic.Services
                     // "Right Back door is closed!";
                 };
 
-               
+                
                 return canMessage;
-
+                
             }           
             else
             {
+                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

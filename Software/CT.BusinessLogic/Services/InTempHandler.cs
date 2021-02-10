@@ -16,6 +16,7 @@ namespace CT.BusinessLogic.Services
                 //7B0 05 62 26 13 00 5B AA AA - 9.1, 91 == 0x5B
                 //7B0 05 62 26 13 00 5C AA AA - 9.2°С
                 //7B0 05 62 26 13 00 5D AA AA -9.3°С
+
                 Debug.WriteLine('\n' + "InTEMP" + '\n');
 
                 return canMessage;

@@ -20,14 +20,16 @@
 }
 
 <button class="btn btn-primary" @onclick="Test">Test</button>
-<button class="btn btn-primary" @onclick="Test1">Test</button>
-<button class="btn btn-primary" @onclick="Test2">Test</button>
+<button class="btn btn-primary" @onclick="Test1">Test1</button>
+<button class="btn btn-primary" @onclick="Test2">Test2</button>
+<button class="btn btn-primary" @onclick="InTemp">InTemp</button>
 
 @code{
     public string Can_1 = "77E 05 62 22 0D 00 65 AA AA\n";
 
     public void Test()
     {
+        Can_1 = "77E 05 62 22 0D 00 65 AA AA\n";
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
         var result = Handler.Handle(can_message);
     }
@@ -35,14 +37,18 @@
     {
         Can_1 = "77E 05 62 22 0D 55 65 AA AA\n";
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
-        can_message = CanMessageComposer.Compose(Can_1);
         var result = Handler.Handle(can_message);
     }
     public void Test2()
     {
         Can_1 = "77E 05 62 22 0D 44 65 AA AA\n";
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
-        can_message = CanMessageComposer.Compose(Can_1);
+        var result = Handler.Handle(can_message);
+    }
+    public void InTemp()
+    {
+        Can_1 = "7B0 05 62 26 13 00 5C AA AA\n";
+        CanMessage can_message = CanMessageComposer.Compose(Can_1);
         var result = Handler.Handle(can_message);
     }
 
