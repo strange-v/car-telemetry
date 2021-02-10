@@ -30,7 +30,8 @@ namespace car_telemetry
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<ISerialService, SerialService>();
-            services.AddSingleton<ICANanalys, CANanalys>();
+            services.AddSingleton<ICanMessageComposer, CanMessageComposer>();
+            services.AddSingleton<IHandler, DoorHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
