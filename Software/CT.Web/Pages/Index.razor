@@ -1,22 +1,15 @@
 ﻿@page "/"
 
-@using System.IO.Ports;
-@using System.Diagnostics;
 @using System.Threading;
-@using car_telemetry.Data
-@inject SerialService _readSerialPortService
+@using CT.BusinessLogic.Interfaces
+
+@inject ISerialService SerialService
+
 
 <h1>Hello, world!</h1>
 
-<h3>Serial ports says:</h3>
-<p>Temporary</p>
 
-<head>
-    <title>Main Scale Monitor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/css/all.css" rel="stylesheet">
-    <link href="/css/stylesheet.css" rel="stylesheet">
-</head>
+<h3>Serial ports says:</h3>
 
 <div class="scale-monitor">
     <div class="digital-monitor net-weight grid-line" @onclick="GetValue">
@@ -32,14 +25,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        ScaleValue = await _readSerialPortService.GetSerialValue();
+        ScaleValue = await SerialService.GetSerialValue();
         _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
     }
 
 
     public async Task GetValue()
     {
-        ScaleValue = await _readSerialPortService.GetSerialValue();
+        ScaleValue = await SerialService.GetSerialValue();
         await InvokeAsync(() => StateHasChanged());
     }
 

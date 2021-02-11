@@ -1,4 +1,3 @@
-using car_telemetry.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CT.BusinessLogic.Interfaces;
+using CT.BusinessLogic.Services;
 
 namespace car_telemetry
 {
@@ -28,8 +29,9 @@ namespace car_telemetry
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<SerialService>();
+            services.AddSingleton<ISerialService, SerialService>();
+            services.AddSingleton<ICanMessageComposer, CanMessageComposer>();
+            services.AddSingleton<IHandler, DoorHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,63 +1,100 @@
-﻿.car {
+﻿.icon-top {
+    width: 50px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.top-data {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.icons-container {
+    width: 100px;
+    height: auto;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.handbrake-img {
+}
+
+.car {
     position: relative;
-    top: 0;
-    left: 0;
+    width: 286px;
+    height: 362px;
+    margin: 40px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .car-img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        width: 500px;
-    }
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-.door {
+/*.door {
+    display: block;
     position: absolute;
-    height: 150px;
+    top: 10%;
+}*/
+.left_front, .right_front, .left_back, .right_back {
+    display: block;
+    position: absolute;
+    top: 42%;
+
 }
 
 .open_left_animation {
-    animation: door_open_left 750ms;
+    animation: door_open_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .open_right_animation {
-    animation: door_open_right 750ms;
+    animation: door_open_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .close_left_animation {
-    animation: door_close_left 750ms;
+    animation: door_close_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .close_right_animation {
-    animation: door_close_right 750ms;
+    animation: door_close_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
 .left_front {
-    top: 200px;
-    left: 676px;
+    display: block;
+    top: 130px;
+    left: 83px;
 }
 
 .right_front {
-    top: 201px;
-    left: 880px;
+    display: block;
+    top: 131px;
+    left: 210px;
 }
 
 .left_back {
-    top: 325px;
-    left: 683px;
+    display: block;
+    top: 209px;
+    left: 87px;
 }
 
 .right_back {
-    top: 333px;
-    left: 875px;
+    display: block;
+    top: 212px;
+    left: 207px;
 }
 
 @keyframes door_open_left {
