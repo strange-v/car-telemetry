@@ -13,12 +13,6 @@ namespace CT.BusinessLogic.Services
         public IHandler SetNext(IHandler handler)
         {
             this._nextHandler = handler;
-
-            //можна і по якомусь порядку, наприклад - двері -> температура і тд..
-
-            // Returning a handler from here will let us link handlers in a
-            // convenient way like this:
-            // monkey.SetNext(squirrel).SetNext(dog);
             return handler;
         }
 

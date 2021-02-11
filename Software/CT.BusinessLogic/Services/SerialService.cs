@@ -14,15 +14,6 @@ using System.Collections.Specialized;
 
 namespace CT.BusinessLogic.Services
 {
-    class SerialSeting
-    {
-        public string COMPort { get; set; }
-        public int BaudRate { get; set; }
-        public string StopBits { get; set; }
-        public int DataBits { get; set; }
-        public string Parity { get; set; }
-        public string Handshake { get; set; }
-    }
     public class SerialService : ISerialService
     {
         public string SerialPortValue { get; set; }
@@ -31,7 +22,7 @@ namespace CT.BusinessLogic.Services
             string buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string filePath = buildDir + @"\SerialPortConfig.json";
             string jsonString = File.ReadAllText(filePath);
-            SerialSeting _sersetting = JsonSerializer.Deserialize<SerialSeting>(jsonString);
+            SerialSettings _sersetting = JsonSerializer.Deserialize<SerialSettings>(jsonString);
 
             System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort(_sersetting.COMPort);
 
@@ -42,7 +33,18 @@ namespace CT.BusinessLogic.Services
             mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), _sersetting.Handshake, true); ;
 
             mySerialPort.NewLine = (@"&N");
-
+            
+            /* while(true)
+            {
+            if (!mySerialPort.IsOpen)
+                {
+                    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
+                    mySerialPort.Open();
+                    break;
+                    Debug.WriteLine("Conection fail!");
+                }
+            }*/
+             
             try
             {
                 if (!mySerialPort.IsOpen)
@@ -54,6 +56,7 @@ namespace CT.BusinessLogic.Services
             catch (Exception)
             {
                 SerialPortValue = "Something wrong with selected COM port!";
+                //Допрацювати exception
             }
         }
 

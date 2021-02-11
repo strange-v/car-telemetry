@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 
-namespace car_telemetry
+namespace CT.Web
 {
     public class Program
     {
