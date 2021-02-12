@@ -7,14 +7,14 @@ namespace CT.BusinessLogic.Entities
     public class DataDictionary
     {
         
-        public static Dictionary<DataEnum.CAN_properties, string> aData = new Dictionary<DataEnum.CAN_properties, string>
+        public static Dictionary<CanProperties, string> aData = new Dictionary<CanProperties, string>
         {
-            { DataEnum.CAN_properties.DoorBackLeft, "Close"},
-            { DataEnum.CAN_properties.DoorBackRight, "Close"},
-            { DataEnum.CAN_properties.DoorFrontLeft, "Close"},
-            { DataEnum.CAN_properties.DoorFrontRight, "Close"},
-            { DataEnum.CAN_properties.OutdoorTemperature, "0.0"},
-            { DataEnum.CAN_properties.IndoorTemperature, "0.0"}
+            { CanProperties.DoorBackLeft, "Close"},
+            { CanProperties.DoorBackRight, "Close"},
+            { CanProperties.DoorFrontLeft, "Close"},
+            { CanProperties.DoorFrontRight, "Close"},
+            { CanProperties.OutdoorTemperature, "0.0"},
+            { CanProperties.IndoorTemperature, "0.0"}
         };
         
     }

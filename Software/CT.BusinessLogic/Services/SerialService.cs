@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,8 +8,6 @@ using System.Diagnostics;
 using CT.BusinessLogic.Interfaces;
 using System.IO;
 using System.Reflection;
-using System.Text.Json;
-using System.Configuration;
 using System.Collections.Specialized;
 
 
@@ -16,21 +15,25 @@ namespace CT.BusinessLogic.Services
 {
     public class SerialService : ISerialService
     {
+        private readonly IConfiguration Configuration;
         public string SerialPortValue { get; set; }
-        public SerialService()
+        public SerialService(IConfiguration configuration)
         {
-            string buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = buildDir + @"\SerialPortConfig.json";
-            string jsonString = File.ReadAllText(filePath);
-            SerialSettings _sersetting = JsonSerializer.Deserialize<SerialSettings>(jsonString);
+            Configuration = configuration;
+            var comPort = Configuration["COMPort"];
+            int baudRate = int.Parse(Configuration["BaudRate"]);
+            var parity = Configuration["Parity"];
+            var stopBits = Configuration["StopBits"];
+            int dataBits = int.Parse(Configuration["DataBits"]);
+            var handshake = Configuration["Handshake"];
 
-            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort(_sersetting.COMPort);
+            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort(comPort);
 
-            mySerialPort.BaudRate = _sersetting.BaudRate;
-            mySerialPort.Parity = (Parity)Enum.Parse(typeof(Parity), _sersetting.Parity, true);
-            mySerialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), _sersetting.StopBits, true);
-            mySerialPort.DataBits = _sersetting.DataBits;
-            mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), _sersetting.Handshake, true); ;
+            mySerialPort.BaudRate = baudRate;
+            mySerialPort.Parity = (Parity)Enum.Parse(typeof(Parity), parity, true);
+            mySerialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopBits, true);
+            mySerialPort.DataBits = dataBits;
+            mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), handshake, true); ;
 
             mySerialPort.NewLine = (@"&N");
             
@@ -59,7 +62,6 @@ namespace CT.BusinessLogic.Services
                 //Допрацювати exception
             }
         }
-
         private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;

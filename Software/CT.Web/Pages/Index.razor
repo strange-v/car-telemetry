@@ -39,68 +39,14 @@
 </div>
 <div class="car">
     <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
-    @if (DataDictionary.aData[DataEnum.CAN_properties.DoorFrontLeft] == "Open")
-    {
-        DriverOpened[0] = 1;
-        <img class="door left_front open_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
-    }
-    else if (DriverOpened[0] == 1 && DataDictionary.aData[DataEnum.CAN_properties.DoorFrontLeft] == "Close")
-    {
-        DriverOpened[0] = 0;
-        <img class="door left_front close_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
-    }
-    else
-    {
-        <img class="door left_front" src="/images/driverClosedDoor.PNG" alt="Image">
-    }
+    <img class="door left_front @styleDoorDriver" src="/images/driverClosedDoor.PNG" alt="Image">
+    <img class="door left_back @styleDoorBackLeft" src="/images/leftClosedDoor.png" alt="Image">
+    <img class="door right_back @styleDoorBackRight" src="/images/rightClosedDoor.png" alt="Image">
+    <img class="door right_front @styleDoorPassenger" src="/images/passangerClosedDoor.png" alt="Image">
 
-    @if (DataDictionary.aData[DataEnum.CAN_properties.DoorBackLeft] == "Open")
-    {
-        DriverOpened[1] = 1;
-        <img class="door left_back open_left_animation" src="/images/leftClosedDoor.png" alt="Image">
-    }
-    else if (DriverOpened[1] == 1 && DataDictionary.aData[DataEnum.CAN_properties.DoorBackLeft] == "Close")
-    {
-        DriverOpened[1] = 0;
-        <img class="door left_back close_left_animation" src="/images/leftClosedDoor.png" alt="Image">
-    }
-    else
-    {
-        <img class="door left_back" src="/images/leftClosedDoor.png" alt="Image">
-    }
-
-    @if (DataDictionary.aData[DataEnum.CAN_properties.DoorBackRight] == "Open")
-    {
-        DriverOpened[2] = 1;
-        <img class="door right_back open_right_animation" src="/images/rightClosedDoor.png" alt="Image">
-    }
-    else if (DriverOpened[2] == 1 && DataDictionary.aData[DataEnum.CAN_properties.DoorBackRight] == "Close")
-    {
-        DriverOpened[2] = 0;
-        <img class="door right_back close_right_animation" src="/images/rightClosedDoor.png" alt="Image">
-    }
-    else
-    {
-        <img class="door right_back" src="/images/rightClosedDoor.png" alt="Image">
-    }
-
-    @if (DataDictionary.aData[DataEnum.CAN_properties.DoorFrontRight] == "Open")
-    {
-        DriverOpened[3] = 1;
-        <img class="door right_front open_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
-    }
-    else if (DriverOpened[3] == 1 && DataDictionary.aData[DataEnum.CAN_properties.DoorFrontRight] == "Open")
-    {
-        DriverOpened[3] = 0;
-        <img class="door right_front close_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
-    }
-    else
-    {
-        <img class="door right_front" src="/images/passangerClosedDoor.png" alt="Image">
-    }
 </div>
 <div>
-    @foreach (KeyValuePair<DataEnum.CAN_properties, string> entry in DataDictionary.aData)
+    @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
     {
         <p>@entry.Key = @entry.Value</p>
     }
@@ -110,12 +56,12 @@
 
 @code
 {
-    private int Count { get; set; } = 100;
     Timer _updateTimer;
     public string Can_1 { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
+        await Task.Delay(3000);
         Can_1 = await SerialService.GetSerialValue();
         _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
@@ -129,5 +75,9 @@
         await InvokeAsync(() => StateHasChanged());
         CanMessage can_message = CanMessageComposer.Compose(Can_1);
         var result = Handler.Handle(can_message);
+        styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
+        styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
+        styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
+        styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
     }
 }
