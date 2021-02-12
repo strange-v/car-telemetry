@@ -33,18 +33,7 @@ namespace CT.BusinessLogic.Services
             mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), _sersetting.Handshake, true); ;
 
             mySerialPort.NewLine = (@"&N");
-            
-            /* while(true)
-            {
-            if (!mySerialPort.IsOpen)
-                {
-                    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
-                    mySerialPort.Open();
-                    break;
-                    Debug.WriteLine("Conection fail!");
-                }
-            }*/
-             
+
             try
             {
                 if (!mySerialPort.IsOpen)
@@ -53,10 +42,9 @@ namespace CT.BusinessLogic.Services
                     mySerialPort.Open();
                 }
             }
-            catch (Exception)
+            catch
             {
-                SerialPortValue = "Something wrong with selected COM port!";
-                //Допрацювати exception
+                
             }
         }
 
@@ -67,10 +55,10 @@ namespace CT.BusinessLogic.Services
             {
                 string indata = sp.ReadExisting();
                 SerialPortValue = indata.ToString();
-        }
-            catch (Exception ex)
+            }
+            catch
             {
-                string msg = ex.Message;
+                
             }
 
         }
@@ -79,5 +67,6 @@ namespace CT.BusinessLogic.Services
         {
             return Task.FromResult(SerialPortValue);
         }
+
     }
 }
