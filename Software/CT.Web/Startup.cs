@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CT.BusinessLogic.Interfaces;
 using CT.BusinessLogic.Services;
+using CT.BusinessLogic.Services.CanHandlers;
 
 namespace CT.Web
 {

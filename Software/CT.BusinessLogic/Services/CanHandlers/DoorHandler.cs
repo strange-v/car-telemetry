@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using CT.BusinessLogic.Entities;
 
-namespace CT.BusinessLogic.Services
+namespace CT.BusinessLogic.Services.CanHandlers
 {
     public class DoorHandler : AbstractHandler
     {

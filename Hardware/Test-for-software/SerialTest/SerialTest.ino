@@ -25,4 +25,12 @@ void loop() {
   delay(1000);
   Serial.println("7B0 05 62 26 13 00 1D AA AA");
   delay(1000);
+  Serial.println("77E 04 62 22 0C 55 AA AA AA");
+  delay(1000);
+  Serial.println("77E 04 62 22 0C 65 AA AA AA");
+  delay(1000);
+  Serial.println("77E 04 62 22 0C 66 AA AA AA");
+  delay(1000);
+  Serial.println("77E 04 62 22 0C 68 AA AA AA");
+  delay(1000);
 }
