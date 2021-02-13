@@ -25,7 +25,7 @@
     }
     <div class="icons-container">
         <img class="icon-top external-temperature" src="/images/thermometer.png" />
-        <span>21</span>
+        <span>@DataDictionary.aData[CanProperties.OutdoorTemperature] &#8451</span>
     </div>
     <div class="icons-container">
         <img class="icon-top" src="/images/oil.png" />
@@ -48,57 +48,63 @@
     <img class="door right_front @styleDoorPassenger" src="/images/passangerClosedDoor.png" alt="Image">
 
 </div>
-<div>
-    @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
-    {
-        <p>@entry.Key = @entry.Value</p>
-    }
-</div>
-
-
-
-@code
-{
-    string message;
-    Timer _updateTimer;
-    public string canCommand { get; set; } = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
-
-        try
+<div class="top-data">
+    <div class="icons-container">
+        <img class="icon-top handbrake-img" src="/images/TempInCar.png" />
+        <span>@DataDictionary.aData[CanProperties.IndoorTemperature] &#8451</span>
+    </div>
+ </div>   
+    <div>
+        @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
         {
-            await Task.Delay(300);
-            canCommand = await SerialService.GetSerialValue();
+            <p>@entry.Key = @entry.Value</p>
+        }
+    </div>
 
-            if (r.IsMatch(canCommand))
+
+
+    @code
+{
+        string message;
+        Timer _updateTimer;
+        public string canCommand { get; set; } = "";
+
+        protected override async Task OnInitializedAsync()
+        {
+            var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
+
+            try
             {
-                _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
-                CanMessage can_message = CanMessageComposer.Compose(canCommand);
-                var result = Handler.Handle(can_message);
+                await Task.Delay(300);
+                canCommand = await SerialService.GetSerialValue();
+
+                if (r.IsMatch(canCommand))
+                {
+                    _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
+                    CanMessage can_message = CanMessageComposer.Compose(canCommand);
+                    var result = Handler.Handle(can_message);
+                }
+            }
+            catch (System.ArgumentNullException)
+            {
+                message = "Something wrong with selected COM port";
+            }
+            catch (System.NullReferenceException)
+            {
+                message = "Something wrong with selected COM port";
             }
         }
-        catch (System.ArgumentNullException)
-        {
-            message = "Something wrong with selected COM port";
-        }
-        catch (System.NullReferenceException)
-        {
-            message = "Something wrong with selected COM port";
-        }
-    }
 
-    public async Task GetValue()
-    {
-        canCommand = await SerialService.GetSerialValue();
-        await InvokeAsync(() => StateHasChanged());
-        CanMessage can_message = CanMessageComposer.Compose(canCommand);
-        var result = Handler.Handle(can_message);
-        styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
-        styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
-        styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
-        styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
-    }
+        public async Task GetValue()
+        {
+            canCommand = await SerialService.GetSerialValue();
+            await InvokeAsync(() => StateHasChanged());
+            CanMessage can_message = CanMessageComposer.Compose(canCommand);
+            var result = Handler.Handle(can_message);
+            styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
+            styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
+            styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
+            styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
+        }
 
-}
+    }
