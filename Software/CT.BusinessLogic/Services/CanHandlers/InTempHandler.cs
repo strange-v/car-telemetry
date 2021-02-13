@@ -11,7 +11,7 @@ namespace CT.BusinessLogic.Services
             {
 
                 var indoorTemperature = canMessage.Byte5 - 40;
-                DataDictionary.aData[DataEnum.CAN_properties.IndoorTemperature] = indoorTemperature.ToString();
+                DataDictionary.aData[CanProperties.IndoorTemperature] = indoorTemperature.ToString();
                 return canMessage;
             }
             else
