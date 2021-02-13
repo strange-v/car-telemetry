@@ -7,12 +7,15 @@
 @using System.Threading;
 @using CT.BusinessLogic.Interfaces;
 @using CT.BusinessLogic.Entities;
+@using System.Text.RegularExpressions;
 
 @inject ISerialService SerialService
 @inject ICanMessageComposer CanMessageComposer
 @inject IHandler Handler
 
 <h1>Car info</h1>
+<h2 style="color:darkred;">@message</h2>
+
 <div class="top-data">
     @if (handbrake == 1)
     {
@@ -56,28 +59,46 @@
 
 @code
 {
+    string message;
     Timer _updateTimer;
-    public string Can_1 { get; set; } = "";
+    public string canCommand { get; set; } = "";
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(3000);
-        Can_1 = await SerialService.GetSerialValue();
-        _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
-        CanMessage can_message = CanMessageComposer.Compose(Can_1);
-        var result = Handler.Handle(can_message);
-    }
+        var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
 
+        try
+        {
+            await Task.Delay(300);
+            canCommand = await SerialService.GetSerialValue();
+
+            if (r.IsMatch(canCommand))
+            {
+                _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
+                CanMessage can_message = CanMessageComposer.Compose(canCommand);
+                var result = Handler.Handle(can_message);
+            }
+        }
+        catch (System.ArgumentNullException)
+        {
+            message = "Something wrong with selected COM port";
+        }
+        catch (System.NullReferenceException)
+        {
+            message = "Something wrong with selected COM port";
+        }
+    }
 
     public async Task GetValue()
     {
-        Can_1 = await SerialService.GetSerialValue();
+        canCommand = await SerialService.GetSerialValue();
         await InvokeAsync(() => StateHasChanged());
-        CanMessage can_message = CanMessageComposer.Compose(Can_1);
+        CanMessage can_message = CanMessageComposer.Compose(canCommand);
         var result = Handler.Handle(can_message);
         styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
         styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
         styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
         styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
     }
+
 }

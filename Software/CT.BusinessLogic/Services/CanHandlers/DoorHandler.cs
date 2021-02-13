@@ -28,7 +28,7 @@ namespace CT.BusinessLogic.Services
         {
             var nextHandler = new InTempHandler();
             
-            if (canMessage.Id.ToString("X") == "77E" && canMessage.Byte3.ToString("X") == "D" && canMessage.Byte2.ToString("X") == "22")
+            if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0D && canMessage.Byte2 == 0x22)
             {
                 string showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
                 int[] door_index = AllIndexesOf(showByteInString, "1");

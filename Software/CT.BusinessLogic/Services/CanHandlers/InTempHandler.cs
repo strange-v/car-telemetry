@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-using CT.BusinessLogic.Entities;
+﻿using CT.BusinessLogic.Entities;
 
 namespace CT.BusinessLogic.Services
 {
@@ -11,10 +7,11 @@ namespace CT.BusinessLogic.Services
         public override CanMessage Handle(CanMessage canMessage)
         {
             
-            if (canMessage.Id.ToString("X") == "7B0" && canMessage.Byte3.ToString("X") == "13" && canMessage.Byte2.ToString("X") == "26")
+            if (canMessage.Id == 0x7B0 && canMessage.Byte3 == 0x13 && canMessage.Byte2 == 0x26)
             {
-                Debug.WriteLine('\n' + "InTEMP" + '\n');
 
+                var indoorTemperature = canMessage.Byte5 - 40;
+                DataDictionary.aData[DataEnum.CAN_properties.IndoorTemperature] = indoorTemperature.ToString();
                 return canMessage;
             }
             else

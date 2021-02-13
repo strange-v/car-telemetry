@@ -21,4 +21,8 @@ void loop() {
   delay(1000);
   Serial.println("77E 05 62 22 0D 44 65 AA AA");//driver and back right door open
   delay(1000);
+  Serial.println("7B0 05 62 26 13 00 5C AA AA");
+  delay(1000);
+  Serial.println("7B0 05 62 26 13 00 1D AA AA");
+  delay(1000);
 }
