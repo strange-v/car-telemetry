@@ -4,9 +4,7 @@ using System.Text;
 
 namespace CT.BusinessLogic.Entities
 {
-    public static class DataEnum
-    {
-        public enum CAN_properties
+        public enum CanProperties
         {
             DoorFrontRight,
             DoorFrontLeft,
@@ -15,5 +13,4 @@ namespace CT.BusinessLogic.Entities
             OutdoorTemperature,
             IndoorTemperature
         }
-    }
 }

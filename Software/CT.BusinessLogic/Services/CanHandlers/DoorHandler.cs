@@ -36,36 +36,36 @@ namespace CT.BusinessLogic.Services
 
                 if (Array.IndexOf(door_index, 7) == -1)
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorFrontLeft] = "Open";
+                    DataDictionary.aData[CanProperties.DoorFrontLeft] = "Open";
                 }
                 else
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorFrontLeft] = "Close";
+                    DataDictionary.aData[CanProperties.DoorFrontLeft] = "Close";
                 };
                 if (Array.IndexOf(door_index, 5) == -1)
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorFrontRight] = "Open";
+                    DataDictionary.aData[CanProperties.DoorFrontRight] = "Open";
                 }
                 else
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorFrontRight] = "Close";
+                    DataDictionary.aData[CanProperties.DoorFrontRight] = "Close";
                 };
                 if (Array.IndexOf(door_index, 3) == -1)
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorBackLeft] = "Open";
+                    DataDictionary.aData[CanProperties.DoorBackLeft] = "Open";
                 }
                 else
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorBackLeft] = "Close";
+                    DataDictionary.aData[CanProperties.DoorBackLeft] = "Close";
                 };
 
                 if (Array.IndexOf(door_index, 1) == -1)
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorBackRight] = "Open";
+                    DataDictionary.aData[CanProperties.DoorBackRight] = "Open";
                 }
                 else
                 {
-                    DataDictionary.aData[DataEnum.CAN_properties.DoorBackRight] = "Close";
+                    DataDictionary.aData[CanProperties.DoorBackRight] = "Close";
                 };
 
                 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading;
 using System.Diagnostics;
@@ -8,10 +9,11 @@ namespace CT.Web.Pages
 {
     public class IndexModel : ComponentBase
     {
-        public int[] DriverOpened { get; set; } = { 0, 0, 0, 0 };
-        public int[] doors { get; set; } = { 0, 0, 0, 0 };
+        public string styleDoorDriver { get; set; } = "";
+        public string styleDoorPassenger { get; set; } = "";
+        public string styleDoorBackLeft { get; set; } = "";
+        public string styleDoorBackRight { get; set; } = "";
         public int handbrake { get; set; } = 1;
-
     }
 }
 
