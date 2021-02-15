@@ -12,6 +12,8 @@
 @inject ISerialService SerialService
 @inject ICanMessageComposer CanMessageComposer
 @inject IHandler Handler
+@inject ISerialService Notifier
+
 
 <h1>Car info</h1>
 <h2 style="color:darkred;">@message</h2>
@@ -53,19 +55,77 @@
         <img class="icon-top handbrake-img" src="/images/TempInCar.png" />
         <span>@DataDictionary.aData[CanProperties.IndoorTemperature] &#8451</span>
     </div>
- </div>   
-    <div>
-        @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
-        {
-            <p>@entry.Key = @entry.Value</p>
-        }
-    </div>
+</div>
+<div>
+    @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
+    {
+        <p>@entry.Key = @entry.Value</p>
+    }
+</div>
 
 
 
-    @code
+@code
 {
-        string message;
+    string message;
+    public string canCommand { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
+        Notifier.Notify += OnNotify;
+        Notifier.Notify += GetValue;
+        try
+        {
+            await Task.Delay(300);
+            canCommand = await SerialService.GetSerialValue();
+
+            if (r.IsMatch(canCommand))
+            {
+                await InvokeAsync(GetValue);
+                CanMessage can_message = CanMessageComposer.Compose(canCommand);
+                var result = Handler.Handle(can_message);
+            }
+        }
+        catch (System.ArgumentNullException)
+        {
+            message = "Something wrong with selected COM port";
+        }
+        catch (System.NullReferenceException)
+        {
+            message = "Something wrong with selected COM port";
+        }
+    }
+
+    public async Task OnNotify()
+    {
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+
+    }
+
+    /*public void Dispose()
+    {
+        Notifier.Notify -= OnNotify;
+    }*/
+
+    public async Task GetValue()
+    {
+        canCommand = await SerialService.GetSerialValue();
+        await InvokeAsync(() => StateHasChanged());
+        CanMessage can_message = CanMessageComposer.Compose(canCommand);
+        var result = Handler.Handle(can_message);
+        styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
+        styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
+        styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
+        styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
+    }
+
+
+    /*
+    string message;
         Timer _updateTimer;
         public string canCommand { get; set; } = "";
 
@@ -106,5 +166,5 @@
             styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
             styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
         }
-
-    }
+    */
+}

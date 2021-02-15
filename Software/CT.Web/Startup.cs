@@ -31,6 +31,7 @@ namespace CT.Web
             services.AddSingleton<ISerialService, SerialService>();
             services.AddSingleton<ICanMessageComposer, CanMessageComposer>();
             services.AddSingleton<IHandler, DoorHandler>();
+            services.AddSingleton<ICanMessageService, CanMessageService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

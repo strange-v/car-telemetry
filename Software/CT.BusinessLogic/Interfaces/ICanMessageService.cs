@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace CT.BusinessLogic.Interfaces
 {
-    public interface ISerialService
+    public interface ICanMessageService
     {
-        Task<string> GetSerialValue();
-        Task Update();
-        event Func<Task> Notify;
+        //Task Update();
+        //event Func<Task> Notify;
     }
 }

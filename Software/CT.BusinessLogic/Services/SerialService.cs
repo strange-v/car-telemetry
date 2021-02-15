@@ -10,11 +10,20 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Specialized;
 
-
 namespace CT.BusinessLogic.Services
 {
     public class SerialService : ISerialService
     {
+        public async Task Update()
+        {
+            if (Notify != null)
+            {
+                await Notify.Invoke();
+            }
+        }
+
+        public event Func<Task> Notify;
+
         private readonly IConfiguration Configuration;
         public string SerialPortValue { get; set; }
         public SerialService(IConfiguration configuration)
@@ -50,13 +59,14 @@ namespace CT.BusinessLogic.Services
                 
             }
         }
-        private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        public void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
         {
             System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
             try
             {
                 string indata = sp.ReadExisting();
                 SerialPortValue = indata.ToString();
+                Update();
             }
             catch
             {
