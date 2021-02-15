@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace CT.BusinessLogic.Entities
 {
@@ -14,7 +12,11 @@ namespace CT.BusinessLogic.Entities
             { CanProperties.DoorFrontLeft, "Close"},
             { CanProperties.DoorFrontRight, "Close"},
             { CanProperties.OutdoorTemperature, "0.0"},
-            { CanProperties.IndoorTemperature, "0.0"}
+            { CanProperties.IndoorTemperature, "0.0"},
+            { CanProperties.Handbrake, "0"},
+            { CanProperties.FuelLevel, "0"},
+            { CanProperties.CoolantTemperature, "0"},
+            { CanProperties.EngineRpm, "0"}
         };
         
     }

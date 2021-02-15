@@ -2,11 +2,11 @@
 
 namespace CT.BusinessLogic.Services.CanHandlers
 {
-    class OutTempHandler : AbstractHandler
+    public class OutTempHandler : AbstractHandler
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-
+            var nextHandler = new HandbrakeHandler();
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0C && canMessage.Byte2 == 0x22)
             {
                 var outdoorTemperature = (double)(canMessage.Byte4 - 100)/2;
@@ -15,6 +15,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
+                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CT.BusinessLogic.Entities
+﻿namespace CT.BusinessLogic.Entities
 {
         public enum CanProperties
         {
@@ -11,6 +7,10 @@ namespace CT.BusinessLogic.Entities
             DoorBackRight,
             DoorBackLeft,
             OutdoorTemperature,
-            IndoorTemperature
+            IndoorTemperature,
+            Handbrake,
+            FuelLevel,
+            CoolantTemperature,
+            EngineRpm
         }
 }
