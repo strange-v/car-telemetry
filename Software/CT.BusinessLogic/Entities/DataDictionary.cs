@@ -16,7 +16,11 @@ namespace CT.BusinessLogic.Entities
             { CanProperties.Handbrake, "0"},
             { CanProperties.FuelLevel, "0"},
             { CanProperties.CoolantTemperature, "0"},
-            { CanProperties.EngineRpm, "0"}
+            { CanProperties.EngineRpm, "0"},
+            { CanProperties.OilTemperature, "0"},
+            { CanProperties.TurnSignal, "0"},
+            { CanProperties.CurrentFuelConsumption, "0.0"},
+            { CanProperties.TotalKm, "0"}
         };
         
     }

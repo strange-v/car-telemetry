@@ -11,6 +11,10 @@
             Handbrake,
             FuelLevel,
             CoolantTemperature,
-            EngineRpm
+            EngineRpm,
+            OilTemperature,
+            TurnSignal,
+            CurrentFuelConsumption,
+            TotalKm
         }
 }
