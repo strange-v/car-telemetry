@@ -26,8 +26,8 @@
         </div>
     }
     <div class="icons-container">
-        <img class="icon-top external-temperature" src="/images/thermometer.png" />
-        <span>@DataDictionary.aData[CanProperties.OutdoorTemperature] &#8451</span>
+        <img class="icon-top external-temperature" src="/images/engine-coolant.png" />
+        <span>@coolantTemp &#8451</span>
     </div>
     <div class="icons-container">
         <img class="icon-top" src="/images/oil.png" />
@@ -39,7 +39,7 @@
     </div>
     <div class="icons-container">
         <img class="icon-top" src="/images/gas.png" />
-        <span>42 l</span>
+        <span>@fuelLevel l</span>
     </div>
 </div>
 <div class="car">
@@ -54,6 +54,10 @@
     <div class="icons-container">
         <img class="icon-top handbrake-img" src="/images/TempInCar.png" />
         <span>@DataDictionary.aData[CanProperties.IndoorTemperature] &#8451</span>
+    </div>
+    <div class="icons-container">
+        <img class="icon-top external-temperature" src="/images/thermometer.png" />
+        <span>@DataDictionary.aData[CanProperties.OutdoorTemperature] &#8451</span>
     </div>
 </div>
 <div>
@@ -121,6 +125,9 @@
         styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
         styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
         styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
+        handbrake = int.Parse(DataDictionary.aData[CanProperties.Handbrake]);
+        coolantTemp = int.Parse(DataDictionary.aData[CanProperties.CoolantTemperature]);
+        fuelLevel = int.Parse(DataDictionary.aData[CanProperties.FuelLevel]);
     }
 
 

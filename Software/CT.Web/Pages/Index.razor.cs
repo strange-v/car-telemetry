@@ -13,7 +13,10 @@ namespace CT.Web.Pages
         public string styleDoorPassenger { get; set; } = "";
         public string styleDoorBackLeft { get; set; } = "";
         public string styleDoorBackRight { get; set; } = "";
-        public int handbrake { get; set; } = 1;
+        public int handbrake { get; set; } = 0;
+        public int coolantTemp { get; set; } = 0;
+        public int engineRpm { get; set; } = 0;
+        public int fuelLevel { get; set; } = 0;
     }
 }
 
