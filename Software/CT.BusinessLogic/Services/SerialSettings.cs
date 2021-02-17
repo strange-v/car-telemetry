@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CT.BusinessLogic.Services
+﻿namespace CT.BusinessLogic.Services
 {
     class SerialSettings
     {

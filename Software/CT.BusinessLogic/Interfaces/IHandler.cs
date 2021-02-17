@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CT.BusinessLogic.Entities;
+﻿using CT.BusinessLogic.Entities;
 
 namespace CT.BusinessLogic.Interfaces
 {
@@ -9,6 +6,6 @@ namespace CT.BusinessLogic.Interfaces
     {
         IHandler SetNext(IHandler handler);
 
-        CanMessage Handle(CanMessage canMessage);
+        CanMessage Handle(CanMessage inCanMessage);
     }
 }

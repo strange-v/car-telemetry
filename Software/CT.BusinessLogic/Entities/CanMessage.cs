@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CT.BusinessLogic.Entities
+﻿namespace CT.BusinessLogic.Entities
 {
     public class CanMessage
     {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CT.BusinessLogic.Interfaces;
+﻿using CT.BusinessLogic.Interfaces;
 using CT.BusinessLogic.Entities;
 
-namespace CT.BusinessLogic.Services
+namespace CT.BusinessLogic.Services.CanHandlers
 {
     public abstract class AbstractHandler : IHandler
     {
@@ -15,19 +12,16 @@ namespace CT.BusinessLogic.Services
             this._nextHandler = handler;
             return handler;
         }
-
-        public virtual CanMessage Handle(CanMessage canMessage)
+        public virtual CanMessage Handle(CanMessage inCanMessage)
         {
-            
             if (this._nextHandler != null)
             {
-                return this._nextHandler.Handle(canMessage);
+                return this._nextHandler.Handle(inCanMessage);
             }
             else
             {
                 return null;
             }
-            
         }
     }
 }

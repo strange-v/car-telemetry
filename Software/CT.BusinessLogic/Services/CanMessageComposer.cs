@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CT.BusinessLogic.Entities;
+﻿using CT.BusinessLogic.Entities;
 using CT.BusinessLogic.Interfaces;
 using System.Globalization;
 
