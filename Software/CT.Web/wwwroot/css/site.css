@@ -4,6 +4,21 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.day-time {
+    background-color: darkgrey;
+    color: black;
+}
+
+.night-time {
+    background-color: darkslategrey;
+    color: white;
+}
+
+.night-time .img-invert {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+}
+
 a, .btn-link {
     color: #0366d6;
 }

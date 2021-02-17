@@ -1,9 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Threading;
-using System.Diagnostics;
-using System.IO.Ports;
 
 namespace CT.Web.Pages
 {
@@ -13,10 +8,14 @@ namespace CT.Web.Pages
         public string styleDoorPassenger { get; set; } = "";
         public string styleDoorBackLeft { get; set; } = "";
         public string styleDoorBackRight { get; set; } = "";
+        public string turnSignal { get; set; } = "";
         public int handbrake { get; set; } = 0;
-        public int coolantTemp { get; set; } = 0;
-        public int engineRpm { get; set; } = 0;
-        public int fuelLevel { get; set; } = 0;
+        public string coolantTemp { get; set; } = "";
+        public string engineRpm { get; set; } = "";
+        public string fuelLevel { get; set; } = "";
+        public string currFuel { get; set; } = "";
+        public string oilTemp { get; set; } = "";
+        public string totalKm { get; set; } = ""; 
     }
 }
 

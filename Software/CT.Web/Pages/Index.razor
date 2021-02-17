@@ -1,10 +1,6 @@
 ﻿@page "/"
 @inherits IndexModel
 @using System;
-@using System.Diagnostics;
-@using System.Collections.Generic;
-@using System.Linq;
-@using System.Threading;
 @using CT.BusinessLogic.Interfaces;
 @using CT.BusinessLogic.Entities;
 @using System.Text.RegularExpressions;
@@ -14,60 +10,94 @@
 @inject IHandler Handler
 @inject ISerialService Notifier
 
-
-<h1>Car info</h1>
-<h2 style="color:darkred;">@message</h2>
-
-<div class="top-data">
-    @if (handbrake == 1)
-    {
-        <div class="icons-container">
-            <img class="icon-top handbrake-img" src="/images/handbrake.png" />
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-9">
+            <h1>Car telemetry</h1>
+            <h2 style="color:darkred;">@message</h2>
         </div>
-    }
-    <div class="icons-container">
-        <img class="icon-top external-temperature" src="/images/engine-coolant.png" />
-        <span>@coolantTemp &#8451</span>
+        <div class="col-md-3">
+            <h1>@DateTime.Now.Hour : @DateTime.Now.Minute</h1>
+        </div>
     </div>
-    <div class="icons-container">
-        <img class="icon-top" src="/images/oil.png" />
-        <span>85</span>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-data">
+                @if (handbrake == 1)
+                {
+                    <div class="icons-container">
+                        <img class="icon-top handbrake-img" src="/images/handbrake.png" />
+                    </div>
+                }
+                <div class="icons-container">
+                    <img class="icon-top external-temperature img-invert" src="/images/engine-coolant.png" />
+                    <span>@coolantTemp &#8451</span>
+                </div>
+                <div class="icons-container">
+                    <img class="icon-top img-invert" src="/images/oil.png" />
+                    <span>@oilTemp &#8451</span>
+                </div>
+                <div class="icons-container">
+                    <img class="icon-top img-invert" src="/images/road.png" />
+                    <span>653 km</span>
+                </div>
+                <div class="icons-container">
+                    <img class="icon-top img-invert" src="/images/gas.png" />
+                    <span>@fuelLevel l</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="icons-container">
-        <img class="icon-top" src="/images/road.png" />
-        <span>653 km</span>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="text-center">
+                <div class="icons-container">
+                    <h1>@engineRpm RPM</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="car">
+                <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
+                @if (turnSignal == "Left")
+                {
+                    <img class="left_front_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
+                    <img class="left_back_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
+                }
+                else if (turnSignal == "Right")
+                {
+                    <img class="right_front_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
+                    <img class="right_back_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
+                }
+                <img class="door left_front @styleDoorDriver" src="/images/driverClosedDoor.PNG" alt="Image">
+                <img class="door left_back @styleDoorBackLeft" src="/images/leftClosedDoor.png" alt="Image">
+                <img class="door right_back @styleDoorBackRight" src="/images/rightClosedDoor.png" alt="Image">
+                <img class="door right_front @styleDoorPassenger" src="/images/passangerClosedDoor.png" alt="Image">
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="text-center">
+                <div class="icons-container">
+                    <h1>@totalKm Km</h1>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="icons-container">
-        <img class="icon-top" src="/images/gas.png" />
-        <span>@fuelLevel l</span>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="top-data">
+                <div class="icons-container">
+                    <img class="icon-top img-invert" src="/images/TempInCar.png" />
+                    <span>@DataDictionary.aData[CanProperties.IndoorTemperature] &#8451</span>
+                </div>
+                <div class="icons-container">
+                    <img class="icon-top external-temperature img-invert" src="/images/thermometer.png" />
+                    <span>@DataDictionary.aData[CanProperties.OutdoorTemperature] &#8451</span>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div class="car">
-    <img class="alert alert-secondary car-img" src="/images/car.PNG" alt="Image">
-    <img class="door left_front @styleDoorDriver" src="/images/driverClosedDoor.PNG" alt="Image">
-    <img class="door left_back @styleDoorBackLeft" src="/images/leftClosedDoor.png" alt="Image">
-    <img class="door right_back @styleDoorBackRight" src="/images/rightClosedDoor.png" alt="Image">
-    <img class="door right_front @styleDoorPassenger" src="/images/passangerClosedDoor.png" alt="Image">
-
-</div>
-<div class="top-data">
-    <div class="icons-container">
-        <img class="icon-top handbrake-img" src="/images/TempInCar.png" />
-        <span>@DataDictionary.aData[CanProperties.IndoorTemperature] &#8451</span>
-    </div>
-    <div class="icons-container">
-        <img class="icon-top external-temperature" src="/images/thermometer.png" />
-        <span>@DataDictionary.aData[CanProperties.OutdoorTemperature] &#8451</span>
-    </div>
-</div>
-<div>
-    @foreach (KeyValuePair<CanProperties, string> entry in DataDictionary.aData)
-    {
-        <p>@entry.Key = @entry.Value</p>
-    }
-</div>
-
-
 
 @code
 {
@@ -77,7 +107,6 @@
     protected override async Task OnInitializedAsync()
     {
         var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
-        Notifier.Notify += OnNotify;
         Notifier.Notify += GetValue;
         try
         {
@@ -101,20 +130,6 @@
         }
     }
 
-    public async Task OnNotify()
-    {
-        await InvokeAsync(() =>
-        {
-            StateHasChanged();
-        });
-
-    }
-
-    /*public void Dispose()
-    {
-        Notifier.Notify -= OnNotify;
-    }*/
-
     public async Task GetValue()
     {
         canCommand = await SerialService.GetSerialValue();
@@ -125,53 +140,13 @@
         styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
         styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
         styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
+        turnSignal = DataDictionary.aData[CanProperties.TurnSignal];
         handbrake = int.Parse(DataDictionary.aData[CanProperties.Handbrake]);
-        coolantTemp = int.Parse(DataDictionary.aData[CanProperties.CoolantTemperature]);
-        fuelLevel = int.Parse(DataDictionary.aData[CanProperties.FuelLevel]);
+        coolantTemp = DataDictionary.aData[CanProperties.CoolantTemperature];
+        fuelLevel = DataDictionary.aData[CanProperties.FuelLevel];
+        currFuel = DataDictionary.aData[CanProperties.CurrentFuelConsumption];
+        engineRpm = DataDictionary.aData[CanProperties.EngineRpm];
+        oilTemp = DataDictionary.aData[CanProperties.OilTemperature];
+        totalKm = DataDictionary.aData[CanProperties.TotalKm];
     }
-
-
-    /*
-    string message;
-        Timer _updateTimer;
-        public string canCommand { get; set; } = "";
-
-        protected override async Task OnInitializedAsync()
-        {
-            var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
-
-            try
-            {
-                await Task.Delay(300);
-                canCommand = await SerialService.GetSerialValue();
-
-                if (r.IsMatch(canCommand))
-                {
-                    _updateTimer = new Timer(state => { InvokeAsync(GetValue); }, null, 0, 100);
-                    CanMessage can_message = CanMessageComposer.Compose(canCommand);
-                    var result = Handler.Handle(can_message);
-                }
-            }
-            catch (System.ArgumentNullException)
-            {
-                message = "Something wrong with selected COM port";
-            }
-            catch (System.NullReferenceException)
-            {
-                message = "Something wrong with selected COM port";
-            }
-        }
-
-        public async Task GetValue()
-        {
-            canCommand = await SerialService.GetSerialValue();
-            await InvokeAsync(() => StateHasChanged());
-            CanMessage can_message = CanMessageComposer.Compose(canCommand);
-            var result = Handler.Handle(can_message);
-            styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
-            styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
-            styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
-            styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
-        }
-    */
 }

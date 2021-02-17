@@ -5,6 +5,15 @@
     margin-right: auto;
 }
 
+.day-time {
+    background-color: darkgrey;
+}
+
+.night-time-icon {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
+}
+
 .top-data {
     text-align: center;
     white-space: nowrap;
@@ -42,6 +51,55 @@
     position: absolute;
     top: 10%;
 }*/
+
+.left_front_light, .left_back_light, .right_front_light, .right_back_light {
+    display: block;
+    position: absolute;
+    top: 42%;
+}
+
+.left_front_light {
+    display: block;
+    top: 14px;
+    left: 90px;
+}
+
+.left_back_light {
+    display: block;
+    top: 328px;
+    left: 80px;
+}
+
+.right_front_light {
+    display: block;
+    top: 14px;
+    left: 184px;
+}
+
+.right_back_light {
+    display: block;
+    top: 328px;
+    left: 195px;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+
+@-webkit-keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+
+.blink {
+    animation: blink 1s step-start 0s infinite;
+    -webkit-animation: blink 1s step-start 0s infinite;
+}
+
+
 .left_front, .right_front, .left_back, .right_back {
     display: block;
     position: absolute;
