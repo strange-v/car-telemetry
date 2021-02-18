@@ -31,13 +31,5 @@ void loop() {
     digitalToggle(bluePillLED);
     sprintf(output_str, output_format , id, rxbytes[0], rxbytes[1], rxbytes[2], rxbytes[3], rxbytes[4], rxbytes[5], rxbytes[6], rxbytes[7]);
     Serial1.println(output_str);
-    /*Serial1.print(id, HEX);
-      Serial1.print(" ");
-
-      for(int i=0;i<8;i++) {
-      Serial1.print(rxbytes[i], HEX);
-      Serial1.print(" ");
-      }
-      Serial.println();*/
   }
 }
