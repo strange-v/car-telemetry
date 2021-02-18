@@ -6,8 +6,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new TotalKmHandler();
-
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x98 && canMessage.Byte2 == 0x22)
             {
                 var currFuelConsumption = (double)canMessage.Byte5 / 10;
@@ -17,7 +15,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

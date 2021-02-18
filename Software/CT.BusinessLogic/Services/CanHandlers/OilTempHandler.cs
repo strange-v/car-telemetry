@@ -6,8 +6,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new TurnSignalsHandler();
- 
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x2F && canMessage.Byte2 == 0x20)
             {
                 var oilTemp = canMessage.Byte4 - 58;
@@ -16,7 +14,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

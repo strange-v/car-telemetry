@@ -8,8 +8,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new InTempHandler();
-            
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0D && canMessage.Byte2 == 0x22)
             {
                 string showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
@@ -56,7 +54,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }           
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

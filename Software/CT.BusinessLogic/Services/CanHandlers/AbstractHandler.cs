@@ -6,7 +6,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     public abstract class AbstractHandler : IHandler
     {
         private IHandler _nextHandler;
-
         public IHandler SetNext(IHandler handler)
         {
             this._nextHandler = handler;

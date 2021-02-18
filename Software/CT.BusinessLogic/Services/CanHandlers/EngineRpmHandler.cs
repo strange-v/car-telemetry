@@ -7,7 +7,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new OilTempHandler();
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0C && canMessage.Byte2 == 0xF4)
             {
                 var engineRpm = (Convert.ToInt32((canMessage.Byte4.ToString("X") + canMessage.Byte5.ToString("X")), 16)) / 4;
@@ -16,7 +15,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

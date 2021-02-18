@@ -6,8 +6,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new CurrFuelConsumptionHandler();
-
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x1B && canMessage.Byte2 == 0x22)
             {
                 var turnSignal = (canMessage.Byte4 == 0x81) ? "Right" :
@@ -19,7 +17,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

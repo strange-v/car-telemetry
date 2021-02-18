@@ -6,8 +6,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            var nextHandler = new FuelLevelHandler();
-
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x05 && canMessage.Byte2 == 0x22)
             {
                 var handbrake = canMessage.Byte4.ToString("X");
@@ -16,7 +14,6 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
             else
             {
-                SetNext(nextHandler);
                 return base.Handle(canMessage);
             }
         }

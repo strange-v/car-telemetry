@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using CT.BusinessLogic.Interfaces;
 using CT.BusinessLogic.Services;
+using CT.BusinessLogic.Entities;
 using CT.BusinessLogic.Services.CanHandlers;
 
 namespace CT.Web
@@ -24,7 +25,7 @@ namespace CT.Web
             services.AddServerSideBlazor();
             services.AddSingleton<ISerialService, SerialService>();
             services.AddSingleton<ICanMessageComposer, CanMessageComposer>();
-            services.AddSingleton<IHandler, DoorHandler>();
+            services.AddSingleton<IHandler, HandlersSequence>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
