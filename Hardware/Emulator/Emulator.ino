@@ -82,7 +82,7 @@ struct can_frame odometer_msg = {
   .can_dlc = 8,
   .data = {0x05, 0x62, 0x22, 0x03, 0x24, 0xC0, 0xAA, 0xAA}
 };
-uint16_t odometer_raw = 0;
+uint32_t odometer_raw = 0;
 
 // uncomment line below to switch output mode to serial
 #define SERIAL_MODE
