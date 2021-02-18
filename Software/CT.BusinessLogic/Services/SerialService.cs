@@ -50,12 +50,15 @@ namespace CT.BusinessLogic.Services
         public string SerialPortValue { get; set; }
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            SerialPort serialPort = (SerialPort)sender;
+            SerialPort myserialPort = (SerialPort)sender;
             try
             {
-                string indata = serialPort.ReadExisting();
+                string indata = myserialPort.ReadExisting();
                 SerialPortValue = indata.ToString();
-                Update();
+                if (Notify != null)
+                {
+                    Notify.Invoke();
+                }
             }
             catch
             {
@@ -66,13 +69,6 @@ namespace CT.BusinessLogic.Services
         public Task<string> GetSerialValue()
         {
             return Task.FromResult(SerialPortValue);
-        }
-        public async Task Update()
-        {
-            if (Notify != null)
-            {
-                await Notify.Invoke();
-            }
         }
     }
 }

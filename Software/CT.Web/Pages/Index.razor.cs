@@ -9,7 +9,7 @@ namespace CT.Web.Pages
         public string styleDoorBackLeft { get; set; } = "";
         public string styleDoorBackRight { get; set; } = "";
         public string turnSignal { get; set; } = "";
-        public int handbrake { get; set; } = 0;
+        public string handbrake { get; set; } = "";
         public string coolantTemp { get; set; } = "";
         public string engineRpm { get; set; } = "";
         public string fuelLevel { get; set; } = "";

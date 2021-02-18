@@ -23,7 +23,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="top-data">
-                @if (handbrake == 1)
+                @if (handbrake == "1")
                 {
                     <div class="icons-container">
                         <img class="icon-top handbrake-img" src="/images/handbrake.png" />
@@ -133,7 +133,6 @@
     public async Task GetValue()
     {
         canCommand = await SerialService.GetSerialValue();
-        await InvokeAsync(() => StateHasChanged());
         CanMessage can_message = CanMessageComposer.Compose(canCommand);
         var result = Handler.Handle(can_message);
         styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
@@ -141,12 +140,13 @@
         styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";
         styleDoorPassenger = DataDictionary.aData[CanProperties.DoorFrontRight] + "_right_animation";
         turnSignal = DataDictionary.aData[CanProperties.TurnSignal];
-        handbrake = int.Parse(DataDictionary.aData[CanProperties.Handbrake]);
+        handbrake = DataDictionary.aData[CanProperties.Handbrake];
         coolantTemp = DataDictionary.aData[CanProperties.CoolantTemperature];
         fuelLevel = DataDictionary.aData[CanProperties.FuelLevel];
         currFuel = DataDictionary.aData[CanProperties.CurrentFuelConsumption];
         engineRpm = DataDictionary.aData[CanProperties.EngineRpm];
         oilTemp = DataDictionary.aData[CanProperties.OilTemperature];
         totalKm = DataDictionary.aData[CanProperties.TotalKm];
+        await InvokeAsync(() => StateHasChanged());
     }
 }
