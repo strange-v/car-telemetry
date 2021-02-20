@@ -2,19 +2,12 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+    background: radial-gradient(#445a64, #293a41);
+    color: #a5a5a5;
 }
 
-.day-time {
-    background-color: darkgrey;
-    color: black;
-}
-
-.night-time {
-    background-color: darkslategrey;
-    color: white;
-}
-
-.night-time .img-invert {
+.img-invert {
     filter: invert(100%);
     -webkit-filter: invert(100%);
 }

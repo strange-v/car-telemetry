@@ -5,8 +5,8 @@
     margin-right: auto;
 }
 
-.day-time {
-    background-color: darkgrey;
+.size-box{
+    height: 50px;
 }
 
 .night-time-icon {
@@ -28,9 +28,6 @@
     margin-right: auto;
 }
 
-.handbrake-img {
-}
-
 .car {
     position: relative;
     width: 286px;
@@ -46,12 +43,6 @@
     margin-right: auto;
 }
 
-/*.door {
-    display: block;
-    position: absolute;
-    top: 10%;
-}*/
-
 .left_front_light, .left_back_light, .right_front_light, .right_back_light {
     display: block;
     position: absolute;
@@ -60,26 +51,26 @@
 
 .left_front_light {
     display: block;
-    top: 14px;
-    left: 90px;
+    top: 0px;
+    left: 72px;
 }
 
 .left_back_light {
     display: block;
-    top: 328px;
-    left: 80px;
+    top: 316px;
+    left: 62px;
 }
 
 .right_front_light {
     display: block;
-    top: 14px;
-    left: 184px;
+    top: 0px;
+    left: 164px;
 }
 
 .right_back_light {
     display: block;
-    top: 328px;
-    left: 195px;
+    top: 316px;
+    left: 172px;
 }
 
 @keyframes blink {
@@ -132,26 +123,26 @@
 
 .left_front {
     display: block;
-    top: 130px;
-    left: 83px;
+    top: 118px;
+    left: 62px;
 }
 
 .right_front {
     display: block;
-    top: 131px;
-    left: 210px;
+    top: 118px;
+    left: 190px;
 }
 
 .left_back {
     display: block;
-    top: 209px;
-    left: 87px;
+    top: 197px;
+    left: 66px;
 }
 
 .right_back {
     display: block;
-    top: 212px;
-    left: 207px;
+    top: 198px;
+    left: 187px;
 }
 
 @keyframes door_open_left {

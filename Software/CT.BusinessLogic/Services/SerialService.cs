@@ -8,6 +8,7 @@ namespace CT.BusinessLogic.Services
 {
     public class SerialService : ISerialService
     {
+        private readonly SerialPort _mySerialPort;
         public SerialService(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -18,7 +19,7 @@ namespace CT.BusinessLogic.Services
             int dataBits = int.Parse(Configuration["DataBits"]);
             var handshake = Configuration["Handshake"];
 
-            SerialPort mySerialPort = new SerialPort(comPort)
+            _mySerialPort = new SerialPort(comPort)
             {
                 BaudRate = baudRate,
                 Parity = (Parity)Enum.Parse(typeof(Parity), parity, true),
@@ -28,14 +29,14 @@ namespace CT.BusinessLogic.Services
             };
             ;
 
-            mySerialPort.NewLine = (@"&N");
+            _mySerialPort.NewLine = (@"&N");
 
             try
             {
-                if (!mySerialPort.IsOpen)
+                if (!_mySerialPort.IsOpen)
                 {
-                    mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
-                    mySerialPort.Open();
+                    _mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                    _mySerialPort.Open();
                 }
             }
             catch
@@ -50,6 +51,7 @@ namespace CT.BusinessLogic.Services
         public string SerialPortValue { get; set; }
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
+            GC.KeepAlive(sender);
             SerialPort myserialPort = (SerialPort)sender;
             try
             {
