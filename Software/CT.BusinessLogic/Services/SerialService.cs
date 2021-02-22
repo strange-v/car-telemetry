@@ -8,6 +8,8 @@ namespace CT.BusinessLogic.Services
 {
     public class SerialService : ISerialService
     {
+        public event Func<string, Task> Notify;
+        private readonly IConfiguration Configuration;
         private readonly SerialPort _mySerialPort;
         public SerialService(IConfiguration configuration)
         {
@@ -44,33 +46,28 @@ namespace CT.BusinessLogic.Services
 
             }
         }
-
-        public event Func<Task> Notify;
-
-        private readonly IConfiguration Configuration;
+        
         public string SerialPortValue { get; set; }
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            GC.KeepAlive(sender);
-            SerialPort myserialPort = (SerialPort)sender;
+            var myserialPort = (SerialPort)sender;
+            var separator = new string[] { "\r\n" };
             try
             {
-                string indata = myserialPort.ReadExisting();
-                SerialPortValue = indata.ToString();
-                if (Notify != null)
+                var indata = myserialPort.ReadExisting();
+                var splittedIndata = indata.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var value in splittedIndata)
                 {
-                    Notify.Invoke();
+                    if (Notify != null)
+                    {
+                        Notify.Invoke(value.ToString());
+                    }
                 }
             }
             catch
             {
-                
+                //ToDo: Handle Exception VF
             }
-
-        }
-        public Task<string> GetSerialValue()
-        {
-            return Task.FromResult(SerialPortValue);
         }
     }
 }

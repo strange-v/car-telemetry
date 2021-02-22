@@ -1,4 +1,14 @@
-﻿.icon-top {
+﻿.side-info {
+    background: rgba(72,84,97,0.1);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 15px 60px;
+}
+
+.side-info-right {
+    border-radius: 60px 15px;
+}
+
+.icon-top {
     width: 50px;
     height: auto;
     margin-left: auto;

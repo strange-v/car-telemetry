@@ -2,14 +2,11 @@
 using System.Threading.Tasks;
 using CT.BusinessLogic.Interfaces;
 using CT.BusinessLogic.Entities;
-using System.Text.RegularExpressions;
-
 
 namespace CT.Web.Pages
 {
     public class IndexModel : ComponentBase
     {
-        [Inject] ISerialService SerialService { get; set; }
         [Inject] ICanMessageComposer CanMessageComposer { get; set; }
         [Inject] IHandler Handler { get; set; }
         [Inject] ISerialService Notifier { get; set; }
@@ -27,25 +24,15 @@ namespace CT.Web.Pages
         public string currFuel { get; set; } = "";
         public string oilTemp { get; set; } = "";
         public string totalKm { get; set; } = "";
-
         public string message { get; set; } = "";
         public string canCommand { get; set; } = "";
 
         protected override async Task OnInitializedAsync()
         {
-            var r = new Regex(@".{3}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s.{2}\s*");
             Notifier.Notify += GetValue;
             try
             {
                 await Task.Delay(300);
-                canCommand = await SerialService.GetSerialValue();
-
-                if (r.IsMatch(canCommand))
-                {
-                    await InvokeAsync(GetValue);
-                    var can_message = CanMessageComposer.Compose(canCommand);
-                    var result = Handler.Handle(can_message);
-                }
             }
             catch (System.ArgumentNullException)
             {
@@ -57,10 +44,9 @@ namespace CT.Web.Pages
             }
         }
 
-        public async Task GetValue()
+        public async Task GetValue(string inCanCommand)
         {
-            canCommand = await SerialService.GetSerialValue();
-            var can_message = CanMessageComposer.Compose(canCommand);
+            var can_message = CanMessageComposer.Compose(inCanCommand);
             var result = Handler.Handle(can_message);
             styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
             styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
