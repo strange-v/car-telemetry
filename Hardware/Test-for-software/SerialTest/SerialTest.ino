@@ -1,17 +1,17 @@
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 void loop() {
   Serial.println("77E 05 62 22 0D 55 65 AA AA");//all doors close
-  //delay(10);
+  //delay(3);
   Serial.println("77E 05 62 22 1B 81 AA AA AA");//turnSignal
-  //delay(20);
+  //delay(2);
   Serial.println("77E 05 62 22 98 00 14 AA AA");//currFuelConsumption
-  //delay(30);
+  //delay(3);
   Serial.println("77E 05 62 22 05 21 AA AA AA");//handbrake is on
-  //delay(50);
+  delay(5);
   Serial.println("77E 04 62 20 2F 67 AA AA AA");//oilTemp
-  //delay(500);
+  delay(500);
   Serial.println("77E 05 62 22 0D 00 65 AA AA");//all doors open
   delay(10);
   Serial.println("77E 04 62 F4 05 65 AA AA AA");//coolantTemp

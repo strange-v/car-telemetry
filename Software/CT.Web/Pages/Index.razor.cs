@@ -46,8 +46,7 @@ namespace CT.Web.Pages
 
         public async Task GetValue(string inCanCommand)
         {
-            var can_message = CanMessageComposer.Compose(inCanCommand);
-            var result = Handler.Handle(can_message);
+            Handler.Handle(CanMessageComposer.Compose(inCanCommand));
             styleDoorDriver = DataDictionary.aData[CanProperties.DoorFrontLeft] + "_left_animation";
             styleDoorBackLeft = DataDictionary.aData[CanProperties.DoorBackLeft] + "_left_animation";
             styleDoorBackRight = DataDictionary.aData[CanProperties.DoorBackRight] + "_right_animation";

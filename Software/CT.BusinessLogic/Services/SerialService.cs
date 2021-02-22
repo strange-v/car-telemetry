@@ -31,7 +31,8 @@ namespace CT.BusinessLogic.Services
             };
             ;
 
-            _mySerialPort.NewLine = (@"&N");
+            _mySerialPort.ReadTimeout = 500;
+            _mySerialPort.WriteTimeout = 500;
 
             try
             {
@@ -46,21 +47,19 @@ namespace CT.BusinessLogic.Services
 
             }
         }
-        
-        public string SerialPortValue { get; set; }
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var myserialPort = (SerialPort)sender;
             var separator = new string[] { "\r\n" };
             try
             {
-                var indata = myserialPort.ReadExisting();
+                var indata = myserialPort.ReadLine();
                 var splittedIndata = indata.Split(separator, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var value in splittedIndata)
                 {
                     if (Notify != null)
                     {
-                        Notify.Invoke(value.ToString());
+                        Notify.Invoke(value.ToString());         
                     }
                 }
             }
