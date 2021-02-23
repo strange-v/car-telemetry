@@ -6,9 +6,9 @@ namespace CT.BusinessLogic.Services.CanHandlers
     {
         public override CanMessage Handle(CanMessage canMessage)
         {
-            if (canMessage.Id == 0x7B0 && canMessage.Byte3 == 0x13 && canMessage.Byte2 == 0x26)
+            if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x13 && canMessage.Byte2 == 0x26)
             {
-                var indoorTemperature = canMessage.Byte5 - 40;
+                var indoorTemperature = canMessage.Byte4 - 40;
                 DataDictionary.aData[CanProperties.IndoorTemperature] = indoorTemperature.ToString();
                 return canMessage;
             }
