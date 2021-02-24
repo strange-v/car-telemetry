@@ -35,6 +35,26 @@ Ready to process input data in the form:
 - Configure appsettings.json with your COM port(normal tested Baud Rate is 115200)
 
 #### Structure of Hardware:
-
+![Hardware schematic](schematic.jpg)
+##### CAN-receiver 
+CAN-receiver consists of stm32f103 board and tja1050 CAN transceiver.  
+CAN-receiver listens to all incoming CAN messages and resends them via serial. 
+##### Emulator 
+Emulator consists of Arduino Uno board and mcp2515 CAN controller. It emulates CAN interface of ECU by sending with some interval CAN packages that represent emulated parameters.  
+Emulator holds raw representation of emulated parameters and updates related CAN packages according to them.  
+Also, emulator can output CAN messages via serial, instead of sending them via mcp2515, for testing purposes. 
+  
+Emulated parameters:
+- Doors state  
+- Current fuel consumption
+- Engine RPM
+- Fuel level
+- Handbrake state
+- Inside temperature
+- Outside temperature
+- Coolant temperature
+- Oil temperature 
+- Odometer  
+- Turn signals switch state
 #### Screenshot:
 ![Screenshot](screen1.png)
