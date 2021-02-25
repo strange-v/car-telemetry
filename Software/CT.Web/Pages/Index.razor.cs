@@ -11,16 +11,13 @@ namespace CT.Web.Pages
         [Inject] ISerialService Notifier { get; set; }
         protected override async Task OnInitializedAsync()
         {
+            Notifier.Notify -= GetCurrentValue;
             Notifier.Notify += GetCurrentValue;
         }
         public async Task GetCurrentValue(string inCanCommand)
         {
             Handler.Handle(CanMessageComposer.Compose(inCanCommand));
             await InvokeAsync(StateHasChanged);
-        }
-        public void Dispose()
-        {
-            Notifier.Notify -= GetCurrentValue;
         }
     }
 }
