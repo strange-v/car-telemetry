@@ -14,11 +14,11 @@ namespace CT.BusinessLogic.Services
         public SerialService(IConfiguration configuration)
         {
             Configuration = configuration;
-            var comPort = Configuration["COMPort"];
-            int baudRate = int.Parse(Configuration["BaudRate"]);
+            var comPort = Configuration["ComPort"];
+            var baudRate = int.Parse(Configuration["BaudRate"]);
             var parity = Configuration["Parity"];
             var stopBits = Configuration["StopBits"];
-            int dataBits = int.Parse(Configuration["DataBits"]);
+            var dataBits = int.Parse(Configuration["DataBits"]);
             var handshake = Configuration["Handshake"];
 
             _mySerialPort = new SerialPort(comPort)
@@ -44,28 +44,23 @@ namespace CT.BusinessLogic.Services
             }
             catch
             {
-
+                //ToDo: Add logging
             }
         }
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             var myserialPort = (SerialPort)sender;
-            var separator = new string[] { "\r\n" };
             try
             {
                 var indata = myserialPort.ReadLine();
-                var splittedIndata = indata.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var value in splittedIndata)
-                {
                     if (Notify != null)
                     {
-                        Notify.Invoke(value.ToString());         
+                        Notify.Invoke(indata.ToString());         
                     }
-                }
             }
             catch
             {
-                //ToDo: Handle Exception VF
+                //ToDo: Handle Exception
             }
         }
     }

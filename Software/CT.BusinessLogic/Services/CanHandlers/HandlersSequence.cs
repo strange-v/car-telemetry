@@ -1,5 +1,4 @@
 ﻿using CT.BusinessLogic.Entities;
-using CT.BusinessLogic.Interfaces;
 
 namespace CT.BusinessLogic.Services.CanHandlers
 {

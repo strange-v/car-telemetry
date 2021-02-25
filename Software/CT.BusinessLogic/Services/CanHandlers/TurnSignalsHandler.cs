@@ -11,8 +11,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
                 var turnSignal = (canMessage.Byte4 == 0x81) ? "Right" :
                                  (canMessage.Byte4 == 0x84) ? "Left" : 
                                  "0";
-
-                DataDictionary.aData[CanProperties.TurnSignal] = turnSignal;
+                SetValue(CanProperties.TurnSignal, turnSignal);
                 return canMessage;
             }
             else

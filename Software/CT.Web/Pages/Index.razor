@@ -1,26 +1,25 @@
 ﻿@page "/"
 @inherits IndexModel
+@using CT.BusinessLogic.Entities;
 
-    
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10">
-            <h1 class="display-4">Car Telemetry</h1>
-            <h2 style="color:darkred;">@message</h2>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-10">
+                <h1 class="display-4">Car Telemetry</h1>
+            </div>
+            <div class="col-md-2">
+                <h1>@DateTime.Now.ToString("HH:mm")</h1>
+            </div>
         </div>
-        <div class="col-md-2">
-            <h1>@DateTime.Now.ToString("HH:mm")</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="top-data size-box">
-                @if (handbrake == "1")
-                {
-                    <div class="icons-container">
-                        <img class="icon-top handbrake-img" src="/images/handbrake.png" />
-                    </div>
-                }
+        <div class="row">
+            <div class="col-md-12">
+                <div class="top-data size-box">
+                    @if (DataDictionary.aData[CanProperties.Handbrake] == "1")
+                    {
+                        <div class="icons-container">
+                            <img class="icon-top handbrake-img" src="/images/handbrake.png" />
+                        </div>
+                    }
                 </div>
             </div>
         </div>
@@ -32,7 +31,7 @@
                     <div class="text-center">
                         <div class="">
                             <img class="icon-top img-invert" src="/images/car-engine.png">
-                            <span class="h4">@engineRpm <small class="text-muted">RPM</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.EngineRpm] <small class="text-muted">RPM</small></span>
                         </div>
                     </div>
                 </div>
@@ -42,7 +41,7 @@
                     <div class="text-center">
                         <div class="">
                             <img class="icon-top external-temperature img-invert" src="/images/engine-coolant.png" />
-                            <span class="h4">@coolantTemp <small class="text-muted">&#8451</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.CoolantTemperature] <small class="text-muted">&#8451</small></span>
                         </div>
                     </div>
                 </div>
@@ -52,7 +51,7 @@
                     <div class="text-center">
                         <div class="">
                             <img class="icon-top img-invert" src="/images/oil.png" />
-                            <span class="h4">@oilTemp <small class="text-muted">&#8451</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.OilTemperature] <small class="text-muted">&#8451</small></span>
                         </div>
                     </div>
                 </div>
@@ -61,20 +60,20 @@
         <div class="col-md-6">
             <div class="car">
                 <img class="car-img" src="/images/car.PNG" alt="Image">
-                @if (turnSignal == "Left")
+                @if (DataDictionary.aData[CanProperties.TurnSignal] == "Left")
                 {
                     <img class="left_front_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
                     <img class="left_back_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
                 }
-                else if (turnSignal == "Right")
+                else if (DataDictionary.aData[CanProperties.TurnSignal] == "Right")
                 {
                     <img class="right_front_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
                     <img class="right_back_light blink" src="/images/povorotniki.png" alt="Povorotniki" />
                 }
-                <img class="door left_front @styleDoorDriver" src="/images/driverClosedDoor.PNG" alt="Image">
-                <img class="door left_back @styleDoorBackLeft" src="/images/leftClosedDoor.png" alt="Image">
-                <img class="door right_back @styleDoorBackRight" src="/images/rightClosedDoor.png" alt="Image">
-                <img class="door right_front @styleDoorPassenger" src="/images/passangerClosedDoor.png" alt="Image">
+                <img class="door left_front @DataDictionary.aData[CanProperties.DoorFrontLeft]_left_animation" src="/images/driverClosedDoor.PNG" alt="Image">
+                <img class="door left_back @DataDictionary.aData[CanProperties.DoorBackLeft]_left_animation" src="/images/leftClosedDoor.png" alt="Image">
+                <img class="door right_back @DataDictionary.aData[CanProperties.DoorBackRight]_right_animation" src="/images/rightClosedDoor.png" alt="Image">
+                <img class="door right_front @DataDictionary.aData[CanProperties.DoorFrontRight]_right_animation" src="/images/passangerClosedDoor.png" alt="Image">
             </div>
         </div>
         <div class="col-md-3 side-info side-info-right">
@@ -83,7 +82,7 @@
                     <div class="text-center">
                         <div class="icons-container">
                             <img class="icon-top img-invert" src="/images/gas.png" />
-                            <span class="h4">@fuelLevel <small class="text-muted">L</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.FuelLevel] <small class="text-muted">L</small></span>
                         </div>
                     </div>
                 </div>
@@ -93,7 +92,7 @@
                     <div class="text-center">
                         <div class="">
                             <img class="icon-top img-invert" src="/images/TempInCar.png" />
-                            <span class="h4">@indoorTemperature <small class="text-muted">&#8451</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.IndoorTemperature] <small class="text-muted">&#8451</small></span>
                         </div>
                     </div>
                 </div>
@@ -103,7 +102,7 @@
                     <div class="text-center">
                         <div class="">
                             <img class="icon-top external-temperature img-invert" src="/images/thermometer.png" />
-                            <span class="h4">@outdoorTemperature <small class="text-muted">&#8451</small></span>
+                            <span class="h4">@DataDictionary.aData[CanProperties.OutdoorTemperature] <small class="text-muted">&#8451</small></span>
                         </div>
                     </div>
                 </div>
@@ -113,7 +112,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="text-center">
-                <h1 class="text-center">@totalKm <small class="text-muted">km</small></h1>
+                <h1 class="text-center">@DataDictionary.aData[CanProperties.TotalKm] <small class="text-muted">km</small></h1>
             </div>
         </div>
     </div>

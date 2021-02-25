@@ -22,5 +22,9 @@ namespace CT.BusinessLogic.Services.CanHandlers
                 return null;
             }
         }
+        protected void SetValue(CanProperties property, string value)
+        {
+            DataDictionary.aData[property] = value;
+        }
     }
 }

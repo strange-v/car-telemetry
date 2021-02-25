@@ -9,7 +9,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0C && canMessage.Byte2 == 0x22)
             {
                 var outdoorTemperature = (double)(canMessage.Byte4 - 100)/2;
-                DataDictionary.aData[CanProperties.OutdoorTemperature] = outdoorTemperature.ToString();
+                SetValue(CanProperties.OutdoorTemperature, outdoorTemperature.ToString());
                 return canMessage;
             }
             else

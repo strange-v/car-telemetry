@@ -10,47 +10,44 @@ namespace CT.BusinessLogic.Services.CanHandlers
         {
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0D && canMessage.Byte2 == 0x22)
             {
-                string showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
-                int[] door_index = AllIndexesOf(showByteInString, "1");
+                var showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
+                var doorIndex = AllIndexesOf(showByteInString, "1");
 
 
-                if (Array.IndexOf(door_index, 7) == -1)
+                if (Array.IndexOf(doorIndex, 7) == -1)
                 {
-                    DataDictionary.aData[CanProperties.DoorFrontLeft] = "Open";
+                    SetValue(CanProperties.DoorFrontLeft, "Open");
                 }
                 else
                 {
-                    DataDictionary.aData[CanProperties.DoorFrontLeft] = "Close";
+                    SetValue(CanProperties.DoorFrontLeft, "Close");
                 };
-                if (Array.IndexOf(door_index, 5) == -1)
+                if (Array.IndexOf(doorIndex, 5) == -1)
                 {
-                    DataDictionary.aData[CanProperties.DoorFrontRight] = "Open";
+                    SetValue(CanProperties.DoorFrontRight, "Open");
                 }
                 else
                 {
-                    DataDictionary.aData[CanProperties.DoorFrontRight] = "Close";
+                    SetValue(CanProperties.DoorFrontRight, "Close");
                 };
-                if (Array.IndexOf(door_index, 3) == -1)
+                if (Array.IndexOf(doorIndex, 3) == -1)
                 {
-                    DataDictionary.aData[CanProperties.DoorBackLeft] = "Open";
+                    SetValue(CanProperties.DoorBackLeft, "Open");
                 }
                 else
                 {
-                    DataDictionary.aData[CanProperties.DoorBackLeft] = "Close";
+                    SetValue(CanProperties.DoorBackLeft, "Close");
                 };
 
-                if (Array.IndexOf(door_index, 1) == -1)
+                if (Array.IndexOf(doorIndex, 1) == -1)
                 {
-                    DataDictionary.aData[CanProperties.DoorBackRight] = "Open";
+                    SetValue(CanProperties.DoorBackRight, "Open");
                 }
                 else
                 {
-                    DataDictionary.aData[CanProperties.DoorBackRight] = "Close";
+                    SetValue(CanProperties.DoorBackRight, "Close");
                 };
-
-                
-                return canMessage;
-                
+                return canMessage; 
             }           
             else
             {
@@ -66,7 +63,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
             }
 
             var indexes = new List<int>();
-            int index = 0;
+            var index = 0;
 
             while ((index = str.IndexOf(substr, index, ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal)) != -1)
             {

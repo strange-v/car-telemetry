@@ -1,7 +1,7 @@
 # Car Telemetry
 ## See in Web data from CAN bus
 
-Write using Blazor - a free and open-source web framework. 
+Powered by Blazor - a free and open-source web framework. 
 Blazor Server edition of Blazor apps has been used.
 
 ## NuGet Packages:
