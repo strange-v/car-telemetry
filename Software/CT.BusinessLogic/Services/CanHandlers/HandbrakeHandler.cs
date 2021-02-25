@@ -9,6 +9,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x05 && canMessage.Byte2 == 0x22)
             {
                 var handbrake = canMessage.Byte4.ToString("X");
+                //Byte4 is 20 or 21 possible
                 SetValue(CanProperties.Handbrake, handbrake[1].ToString());
                 return canMessage;
             }

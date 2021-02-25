@@ -9,7 +9,7 @@ namespace CT.BusinessLogic.Services.CanHandlers
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x06 && canMessage.Byte2 == 0x22)
             {
                 var fuelLevel = canMessage.Byte4.ToString();
-                SetValue(CanProperties.FuelLevel, fuelLevel.ToString());
+                SetValue(CanProperties.FuelLevel, fuelLevel);
                 return canMessage;
             }
             else

@@ -11,8 +11,8 @@ namespace CT.BusinessLogic.Services.CanHandlers
             if (canMessage.Id == 0x77E && canMessage.Byte3 == 0x0D && canMessage.Byte2 == 0x22)
             {
                 var showByteInString = Convert.ToString(canMessage.Byte4, 2).PadLeft(8, '0');
+                //Byte4 in form 00000000, 0 mean open, 1 close. e.g. 01000100 
                 var doorIndex = AllIndexesOf(showByteInString, "1");
-
 
                 if (Array.IndexOf(doorIndex, 7) == -1)
                 {
