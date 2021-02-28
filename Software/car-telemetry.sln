@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "car-telemetry", "car-telemetry.csproj", "{72289D16-44CE-43EE-B2A7-7DFD5E27FD6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CT.Web", "CT.Web\CT.Web.csproj", "{72289D16-44CE-43EE-B2A7-7DFD5E27FD6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CT.BusinessLogic", "..\CT.BusinessLogic\CT.BusinessLogic.csproj", "{3BF9FAD1-7E53-4B46-A8DB-BA374696EDBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CT.BusinessLogic", "CT.BusinessLogic\CT.BusinessLogic.csproj", "{3BF9FAD1-7E53-4B46-A8DB-BA374696EDBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

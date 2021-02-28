@@ -1,8 +1,27 @@
-﻿.icon-top {
+﻿.side-info {
+    background: rgba(72,84,97,0.1);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 15px 60px;
+}
+
+.side-info-right {
+    border-radius: 60px 15px;
+}
+
+.icon-top {
     width: 50px;
     height: auto;
     margin-left: auto;
     margin-right: auto;
+}
+
+.size-box{
+    height: 50px;
+}
+
+.night-time-icon {
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
 }
 
 .top-data {
@@ -17,9 +36,6 @@
     display: inline-block;
     margin-left: auto;
     margin-right: auto;
-}
-
-.handbrake-img {
 }
 
 .car {
@@ -37,37 +53,79 @@
     margin-right: auto;
 }
 
-/*.door {
+.left_front_light, .left_back_light, .right_front_light, .right_back_light {
     display: block;
     position: absolute;
-    top: 10%;
-}*/
+    top: 42%;
+}
+
+.left_front_light {
+    display: block;
+    top: 0px;
+    left: 72px;
+}
+
+.left_back_light {
+    display: block;
+    top: 316px;
+    left: 62px;
+}
+
+.right_front_light {
+    display: block;
+    top: 0px;
+    left: 164px;
+}
+
+.right_back_light {
+    display: block;
+    top: 316px;
+    left: 172px;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+
+@-webkit-keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+
+.blink {
+    animation: blink 1s step-start 0s infinite;
+    -webkit-animation: blink 1s step-start 0s infinite;
+}
+
+
 .left_front, .right_front, .left_back, .right_back {
     display: block;
     position: absolute;
     top: 42%;
-
 }
 
-.open_left_animation {
+.Open_left_animation {
     animation: door_open_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
-.open_right_animation {
+.Open_right_animation {
     animation: door_open_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
-.close_left_animation {
+.Close_left_animation {
     animation: door_close_left 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
 }
 
-.close_right_animation {
+.Close_right_animation {
     animation: door_close_right 500ms;
     animation-fill-mode: forwards;
     animation-iteration-count: 1, 0, infinite;
@@ -75,26 +133,26 @@
 
 .left_front {
     display: block;
-    top: 130px;
-    left: 83px;
+    top: 118px;
+    left: 62px;
 }
 
 .right_front {
     display: block;
-    top: 131px;
-    left: 210px;
+    top: 118px;
+    left: 190px;
 }
 
 .left_back {
     display: block;
-    top: 209px;
-    left: 87px;
+    top: 197px;
+    left: 66px;
 }
 
 .right_back {
     display: block;
-    top: 212px;
-    left: 207px;
+    top: 198px;
+    left: 187px;
 }
 
 @keyframes door_open_left {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CT.BusinessLogic.Entities;
+﻿using CT.BusinessLogic.Entities;
 using CT.BusinessLogic.Interfaces;
 using System.Globalization;
 
@@ -10,13 +6,6 @@ namespace CT.BusinessLogic.Services
 {
     public class CanMessageComposer : ICanMessageComposer
     {
-        //дані будуть йти в форматі CAN пакетів через серіал: 
-        //"0x0F6 8 0x8E 0x87 0x32 0xFA 0x26 0x8E 0xBE 0x86\n"
-        //такі будуьб приходити:
-        //77E 05 62 22 0D 55 65 AA AA\n
-        //77E 04 62 22 0C 68 AA AA AA\n - 2 = 104°С
-        //перші два байти буде id, наступний байт кількість даних, далі до 8 байтів даних
-        //в кінці кожного такого повідомлення буде закінчення символ нового рядка
         public CanMessage Compose(string rawMessage)
         {
             var data = rawMessage.Split(' ');

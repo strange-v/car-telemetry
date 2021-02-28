@@ -1,80 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using System.IO.Ports;
-using System.Diagnostics;
 using CT.BusinessLogic.Interfaces;
-using System.IO;
-using System.Reflection;
-using System.Text.Json;
-using System.Configuration;
-using System.Collections.Specialized;
-
 
 namespace CT.BusinessLogic.Services
 {
-    class SerialSeting
-    {
-        public string COMPort { get; set; }
-        public int BaudRate { get; set; }
-        public string StopBits { get; set; }
-        public int DataBits { get; set; }
-        public string Parity { get; set; }
-        public string Handshake { get; set; }
-    }
     public class SerialService : ISerialService
     {
-        public string SerialPortValue { get; set; }
-        public SerialService()
+        public event Func<string, Task> Notify;
+        private readonly IConfiguration Configuration;
+        private readonly SerialPort _mySerialPort;
+        public SerialService(IConfiguration configuration)
         {
-            string buildDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string filePath = buildDir + @"\SerialPortConfig.json";
-            string jsonString = File.ReadAllText(filePath);
-            SerialSeting _sersetting = JsonSerializer.Deserialize<SerialSeting>(jsonString);
+            Configuration = configuration;
+            var comPort = Configuration["ComPort"];
+            var baudRate = int.Parse(Configuration["BaudRate"]);
+            var parity = Configuration["Parity"];
+            var stopBits = Configuration["StopBits"];
+            var dataBits = int.Parse(Configuration["DataBits"]);
+            var handshake = Configuration["Handshake"];
 
-            System.IO.Ports.SerialPort mySerialPort = new System.IO.Ports.SerialPort(_sersetting.COMPort);
+            _mySerialPort = new SerialPort(comPort)
+            {
+                BaudRate = baudRate,
+                Parity = (Parity)Enum.Parse(typeof(Parity), parity, true),
+                StopBits = (StopBits)Enum.Parse(typeof(StopBits), stopBits, true),
+                DataBits = dataBits,
+                Handshake = (Handshake)Enum.Parse(typeof(Handshake), handshake, true)
+            };
+            ;
 
-            mySerialPort.BaudRate = _sersetting.BaudRate;
-            mySerialPort.Parity = (Parity)Enum.Parse(typeof(Parity), _sersetting.Parity, true);
-            mySerialPort.StopBits = (StopBits)Enum.Parse(typeof(StopBits), _sersetting.StopBits, true);
-            mySerialPort.DataBits = _sersetting.DataBits;
-            mySerialPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), _sersetting.Handshake, true); ;
-
-            mySerialPort.NewLine = (@"&N");
+            _mySerialPort.ReadTimeout = 500;
+            _mySerialPort.WriteTimeout = 500;
 
             try
             {
-                if (!mySerialPort.IsOpen)
+                if (!_mySerialPort.IsOpen)
                 {
-                    mySerialPort.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(DataReceivedHandler);
-                    mySerialPort.Open();
+                    _mySerialPort.DataReceived += new SerialDataReceivedEventHandler(DataReceivedHandler);
+                    _mySerialPort.Open();
                 }
             }
-            catch (Exception)
+            catch
             {
-                SerialPortValue = "Something wrong with selected COM port!";
+                //ToDo: Add logging
             }
         }
-
-        private void DataReceivedHandler(object sender, System.IO.Ports.SerialDataReceivedEventArgs e)
+        public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
-            System.IO.Ports.SerialPort sp = (System.IO.Ports.SerialPort)sender;
+            var myserialPort = (SerialPort)sender;
             try
             {
-                string indata = sp.ReadExisting();
-                SerialPortValue = indata.ToString();
-        }
-            catch (Exception ex)
-            {
-                string msg = ex.Message;
+                var indata = myserialPort.ReadLine();
+                    if (Notify != null)
+                    {
+                        Notify.Invoke(indata.ToString());         
+                    }
             }
-
-        }
-
-        public Task<string> GetSerialValue()
-        {
-            return Task.FromResult(SerialPortValue);
+            catch
+            {
+                //ToDo: Handle Exception
+            }
         }
     }
 }
