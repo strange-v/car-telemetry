@@ -1,14 +1,11 @@
-/*
-  Prerequisites:
-  arduino-mcp2515 library: https://github.com/autowp/arduino-mcp2515
-*/
-#include <SPI.h>
 #include <mcp2515.h>
 #include "Emulator_parameters.h"
 // uncomment line below to switch output mode to serial
 //#define SERIAL_MODE
 
-MCP2515 mcp2515(10);
+#define PIN_CS_MCP 10
+
+MCP2515 mcp2515(PIN_CS_MCP);
 
 can_frame* parameters[] = {&door_msg, &handbrake_msg, &outdoor_temperature_msg, &fuel_level_msg, &coolant_temp_msg, &rpm_msg, &oil_temp_msg,  &indoor_temp_msg, &steering_switch_msg, &current_consumption_msg, &odometer_msg};
 uint8_t n_parameters = 11;
@@ -37,7 +34,7 @@ void loop() {
       mcp2515.sendMessage(parameters[i]);
       delay(2);                              // delay for stable transfer of packages
     #else
-      can_frame* can_ptr=parameters[i];
+      can_frame* can_ptr = parameters[i];
       sprintf(output_str, output_format, (uint16_t)can_ptr->can_id, can_ptr->data[0], can_ptr->data[1], can_ptr->data[2], can_ptr->data[3], can_ptr->data[4], can_ptr->data[5], can_ptr->data[6], can_ptr->data[7]);
       Serial.println(output_str);
     #endif
